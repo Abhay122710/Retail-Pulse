@@ -9,12 +9,8 @@ import {
 } from 'lucide-react';
 
 const NAV_TABS: Array<{ id: DashboardTab; label: string }> = [
-  { id: 'overview', label: 'Overview' },
-  { id: 'sources', label: 'Data Sources' },
-  { id: 'extraction', label: 'Extraction' },
-  { id: 'extracted-data', label: 'Data Records' },
-  { id: 'insights', label: 'Insights' },
-  { id: 'settings', label: 'Settings' }
+  { id: 'extraction', label: 'Data Extraction & JSON Export' },
+  { id: 'live-stream', label: 'Live Telemetry & Click Stream' }
 ];
 
 export const Header: React.FC = () => {
@@ -112,6 +108,16 @@ export const Header: React.FC = () => {
 
           {/* Active Data Source Toggle Pill */}
           <div className="flex items-center rounded-full p-1 bg-neutral-100 dark:bg-[#141414] border border-neutral-200/80 dark:border-neutral-800 text-[11px] font-semibold">
+            <button
+              onClick={() => selectSource('ALL SOURCES')}
+              className={`px-3 py-1 rounded-full transition-all cursor-pointer ${
+                selectedSource === 'ALL SOURCES'
+                  ? 'bg-neutral-950 text-white dark:bg-white dark:text-black shadow-xs font-bold'
+                  : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white'
+              }`}
+            >
+              All Stores
+            </button>
             <button
               onClick={() => selectSource('ShopPulse')}
               className={`px-3 py-1 rounded-full transition-all cursor-pointer ${

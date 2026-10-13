@@ -57,27 +57,45 @@ export class EventsController {
       const source = (req.body.source || 'ShopPulse') as 'ShopPulse' | 'TechMart';
       const isShopPulse = source === 'ShopPulse';
 
-      const testPayload = {
+      const eventTypes = ['CLICKBAIT_CLICK', 'PRODUCT_VIEW', 'SEARCH', 'ADD_TO_CART', 'ORDER_CREATED'];
+      const eventType = req.body.event_type || eventTypes[Math.floor(Math.random() * eventTypes.length)];
+
+      let testPayload: any = {
         source,
-        event_type: 'PRODUCT_VIEW',
+        event_type: eventType,
         session_id: `${isShopPulse ? 'SP' : 'TM'}-TEST-SESSION-${Math.floor(100 + Math.random() * 900)}`,
-        user_id: isShopPulse ? 'TEST_USER_01' : undefined,
-        user_code: !isShopPulse ? 'TM_TEST_USER_01' : undefined,
-        product_id: isShopPulse ? 'P001' : undefined,
-        sku: !isShopPulse ? 'TM-LAP-001' : undefined,
-        product_name: isShopPulse ? 'Wireless Headphones' : undefined,
-        item_title: !isShopPulse ? 'Gaming Laptop RTX 4080' : undefined,
-        category: isShopPulse ? 'Electronics' : undefined,
-        department: !isShopPulse ? 'Gaming' : undefined,
-        view_duration_seconds: Math.floor(15 + Math.random() * 30),
         timestamp: new Date().toISOString()
       };
+
+      if (eventType === 'CLICKBAIT_CLICK') {
+        testPayload.banner = isShopPulse ? 'Festival Special - 30% Off Everything' : 'Ultimate RTX 4090 Spotlight Drop';
+        testPayload.clickbait_tag = 'Flash Sale Banner #1';
+        testPayload.target_url = isShopPulse ? '/deals/festival-30' : '/hardware/rtx-4090';
+      } else if (eventType === 'SEARCH') {
+        testPayload.search_query = isShopPulse ? 'wireless earbuds active noise cancelling' : 'mechanical gaming keyboard rgb';
+        testPayload.results_count = Math.floor(4 + Math.random() * 12);
+      } else if (eventType === 'ORDER_CREATED') {
+        testPayload.order_id = `${isShopPulse ? 'ORD' : 'TXN'}-${Math.floor(10000 + Math.random() * 90000)}`;
+        testPayload.total_amount = Math.floor(1499 + Math.random() * 8500);
+        testPayload.payment_method = 'UPI / NetBanking';
+      } else {
+        // PRODUCT_VIEW or ADD_TO_CART
+        testPayload.user_id = isShopPulse ? 'TEST_USER_01' : undefined;
+        testPayload.user_code = !isShopPulse ? 'TM_TEST_USER_01' : undefined;
+        testPayload.product_id = isShopPulse ? 'P001' : undefined;
+        testPayload.sku = !isShopPulse ? 'TM-LAP-001' : undefined;
+        testPayload.product_name = isShopPulse ? 'Wireless Noise-Cancelling Headphones' : undefined;
+        testPayload.item_title = !isShopPulse ? 'Gaming Laptop RTX 4080 Pro' : undefined;
+        testPayload.category = isShopPulse ? 'Electronics' : undefined;
+        testPayload.department = !isShopPulse ? 'Gaming' : undefined;
+        testPayload.view_duration_seconds = Math.floor(15 + Math.random() * 30);
+      }
 
       const canonicalEvent = EventService.processEvent(testPayload);
 
       res.status(201).json({
         success: true,
-        message: 'Test event injected successfully',
+        message: 'Live telemetry event recorded successfully',
         event: canonicalEvent
       });
     } catch (err: any) {

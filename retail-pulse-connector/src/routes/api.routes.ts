@@ -18,6 +18,8 @@ router.post('/test-event', EventsController.handleTestEvent);
 // Data Extraction API
 router.post('/extract', ExtractController.handlePostExtract);
 router.get('/extractions', ExtractController.handleGetExtractions);
+router.get('/extractions/:id/download', ExtractController.handleDownloadExtraction);
+router.get('/extractions/:id/json', ExtractController.handleDownloadExtraction);
 
 // Sources & Summary API
 router.get('/sources', SourcesController.handleGetSources);

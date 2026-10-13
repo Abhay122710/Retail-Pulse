@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight, Sparkles, ShieldCheck, Zap, Truck, ShoppingBag } from 'lucide-react';
 import { ProductCategory } from '../../types';
+import { connectorTracker } from '../../services/connectorTracker';
 
 interface HeroBannerProps {
   onShopNow: () => void;
@@ -72,7 +73,14 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({ onShopNow, onSelectCateg
 
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
               <button
-                onClick={onShopNow}
+                onClick={() => {
+                  connectorTracker.sendEvent('CLICKBAIT_CLICK', {
+                    banner: 'Hero CTA - Shop smarter with ShopPulse',
+                    clickbait_tag: 'Shop Now Main Button',
+                    target: '#catalog-section'
+                  });
+                  onShopNow();
+                }}
                 className="px-8 py-4 rounded-2xl bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-extrabold text-sm shadow-xl shadow-amber-500/25 transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-2"
               >
                 <span>Shop Now</span>
@@ -95,7 +103,17 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({ onShopNow, onSelectCateg
           {/* Right Column Visual Showcase */}
           <div className="lg:col-span-5 hidden lg:block relative">
             <div className="relative mx-auto w-full max-w-md">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white/10 bg-slate-950/40 backdrop-blur-md">
+              <div 
+                onClick={() => {
+                  connectorTracker.sendEvent('CLICKBAIT_CLICK', {
+                    banner: 'Festival Special - 30% Discount on Tech & Apparel',
+                    clickbait_tag: '30% Discount Floating Badge',
+                    target: 'Deals Showcase'
+                  });
+                  onShopNow();
+                }}
+                className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white/10 bg-slate-950/40 backdrop-blur-md cursor-pointer group"
+              >
                 <img
                   src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&auto=format&fit=crop&q=80"
                   alt="E-Commerce Shopping"
@@ -107,7 +125,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({ onShopNow, onSelectCateg
                     <p className="text-xs font-bold text-yellow-300 uppercase tracking-wider">Festival Special</p>
                     <p className="text-sm font-semibold">Up to 30% Discount on Tech & Apparel</p>
                   </div>
-                  <div className="w-10 h-10 rounded-full bg-white text-indigo-900 font-extrabold text-xs flex items-center justify-center shadow-lg">
+                  <div className="w-10 h-10 rounded-full bg-white text-indigo-900 font-extrabold text-xs flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                     -30%
                   </div>
                 </div>

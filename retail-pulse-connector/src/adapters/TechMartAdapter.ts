@@ -22,8 +22,8 @@ export class TechMartAdapter {
         ? payload.gross_value 
         : (typeof payload.total_amount === 'number' ? payload.total_amount : null));
 
-    const productName = payload.item_title || payload.product_name || payload.title || null;
-    const category = payload.department || payload.category || null;
+    const productName = payload.item_title || payload.product_name || payload.banner || payload.title || null;
+    const category = payload.department || payload.category || (payload.banner ? 'Clickbait & Promotions' : null);
 
     return {
       event_id: `EVT-${eventCounter}`,

@@ -224,27 +224,7 @@ class JSONDatabase {
       }
     ];
 
-    this.data.extractions = [
-      {
-        extraction_id: 'EXT-001',
-        source: 'ShopPulse',
-        data_type: 'Orders, Products, Customers',
-        records_extracted: 4820,
-        started_at: new Date(Date.now() - 1000 * 60 * 60).toISOString(),
-        completed_at: new Date(Date.now() - 1000 * 60 * 59).toISOString(),
-        status: 'SUCCESS'
-      },
-      {
-        extraction_id: 'EXT-002',
-        source: 'TechMart',
-        data_type: 'Transactions, Inventory, Users',
-        records_extracted: 3214,
-        started_at: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
-        completed_at: new Date(Date.now() - 1000 * 60 * 29).toISOString(),
-        status: 'SUCCESS'
-      }
-    ];
-
+    this.data.extractions = [];
     this.save();
   }
 

@@ -2,9 +2,10 @@ export type SourceId = 'ShopPulse' | 'TechMart';
 export type SourceSelection = 'ShopPulse' | 'TechMart' | 'ALL SOURCES';
 
 export type DashboardTab = 
+  | 'extraction'
+  | 'live-stream'
   | 'overview'
   | 'sources'
-  | 'extraction'
   | 'extracted-data'
   | 'insights'
   | 'settings';
@@ -50,12 +51,14 @@ export interface TechMartRecord {
 export type ExtractedRecord = ShopPulseRecord | TechMartRecord;
 
 export interface ExtractionResult {
-  source: SourceSelection;
+  source: SourceSelection | string;
   recordsExtracted: number;
   dataTypes: string[];
   extractionTime: string;
   timestamp: string;
-  status: 'Successful';
+  status: 'Successful' | 'SUCCESS';
+  extractionId?: string;
+  data?: any;
 }
 
 export interface InsightKPI {

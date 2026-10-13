@@ -16,6 +16,7 @@ import {
   Cpu
 } from 'lucide-react';
 import { ImageWithFallback } from '../components/common/ImageWithFallback';
+import { connectorTracker } from '../services/connectorTracker';
 
 interface HomePageProps {
   setActiveTab: (tab: string) => void;
@@ -109,6 +110,11 @@ export const HomePage: React.FC<HomePageProps> = ({ setActiveTab, onSelectProduc
           <div className="flex flex-wrap items-center gap-4 pt-2">
             <button
               onClick={() => {
+                connectorTracker.sendEvent('CLICKBAIT_CLICK', {
+                  banner: 'Power Your Digital World Hero Banner',
+                  clickbait_tag: 'Explore Technology Spotlight',
+                  target: 'catalog'
+                });
                 setSelectedDepartment('All');
                 setActiveTab('catalog');
               }}

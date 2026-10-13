@@ -46,6 +46,7 @@ export interface ApiExtractionRecord {
   started_at: string;
   completed_at: string;
   status: 'SUCCESS' | 'FAILED';
+  data?: any;
 }
 
 export const retailPulseApiService = {
@@ -127,10 +128,41 @@ export const retailPulseApiService = {
         body: JSON.stringify({ source, data_types: dataTypes })
       });
       const data = await res.json();
-      return data.success ? data : null;
+      if (!data || !data.success) return null;
+      return {
+        extraction_id: data.extraction_id,
+        source: data.source,
+        data_type: dataTypes.join(', '),
+        records_extracted: data.records_extracted,
+        started_at: data.timestamp || new Date().toISOString(),
+        completed_at: data.timestamp || new Date().toISOString(),
+        status: 'SUCCESS',
+        data: data.data
+      };
     } catch (err) {
       console.warn('[Dashboard API] Error triggering extraction:', err);
       return null;
+    }
+  },
+
+  getExtractionDownloadUrl(extractionId: string): string {
+    return `${API_BASE_URL}/extractions/${extractionId}/download`;
+  },
+
+  downloadJsonFile(data: any, filename: string): void {
+    try {
+      const jsonStr = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
+      const blob = new Blob([jsonStr], { type: 'application/json;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', filename.endsWith('.json') ? filename : `${filename}.json`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error('[Dashboard API] Error downloading JSON file:', err);
     }
   },
 

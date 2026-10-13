@@ -4,18 +4,15 @@ import { Header } from './components/layout/Header';
 import { FooterTicker } from './components/layout/FooterTicker';
 import { LiveBackground } from './components/layout/LiveBackground';
 
-import { OverviewPage } from './pages/OverviewPage';
-import { DataSourcesPage } from './pages/DataSourcesPage';
 import { DataExtractionPage } from './pages/DataExtractionPage';
-import { ExtractedDataPage } from './pages/ExtractedDataPage';
-import { InsightsPage } from './pages/InsightsPage';
-import { SettingsPage } from './pages/SettingsPage';
+import { LiveStreamPage } from './pages/LiveStreamPage';
 
 import { 
   Sun, 
   Moon, 
   ArrowUpRight, 
-  DownloadCloud
+  DownloadCloud,
+  Download
 } from 'lucide-react';
 
 const MainDashboardContent: React.FC = () => {
@@ -24,7 +21,10 @@ const MainDashboardContent: React.FC = () => {
     theme, 
     toggleTheme, 
     sendTestEvent, 
-    setActiveTab
+    startExtraction,
+    extractedJsonData,
+    downloadCurrentExtractionJson,
+    lastExtractionResult
   } = useDashboard();
   const [injectingEvent, setInjectingEvent] = useState(false);
 
@@ -53,17 +53,32 @@ const MainDashboardContent: React.FC = () => {
       <div className="relative z-30 max-w-[1600px] mx-auto px-4 sm:px-8 pt-4 pb-2 flex items-center justify-end gap-3">
         
         {/* Export / Quick Trigger Pill */}
-        <button
-          onClick={() => setActiveTab('extraction')}
-          className={`hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full border text-xs font-semibold shadow-sm hover:shadow-md transition-all backdrop-blur-md cursor-pointer ${
-            isDark
-              ? 'bg-[#121212] border-neutral-800 text-neutral-200 hover:bg-[#1a1a1a]'
-              : 'bg-white/90 border-neutral-200/80 text-neutral-800 hover:bg-white'
-          }`}
-        >
-          <DownloadCloud className={`w-3.5 h-3.5 ${isDark ? 'text-neutral-400' : 'text-neutral-600'}`} />
-          <span>Quick Sync</span>
-        </button>
+        {extractedJsonData ? (
+          <button
+            onClick={downloadCurrentExtractionJson}
+            className={`hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full border text-xs font-semibold shadow-sm hover:shadow-md transition-all backdrop-blur-md cursor-pointer ${
+              isDark
+                ? 'bg-emerald-950/60 border-emerald-800/80 text-emerald-300 hover:bg-emerald-900/60'
+                : 'bg-emerald-50 border-emerald-200 text-emerald-800 hover:bg-emerald-100'
+            }`}
+            title="Download latest extracted JSON file"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span>Download JSON ({lastExtractionResult?.recordsExtracted || 0} records)</span>
+          </button>
+        ) : (
+          <button
+            onClick={() => startExtraction()}
+            className={`hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full border text-xs font-semibold shadow-sm hover:shadow-md transition-all backdrop-blur-md cursor-pointer ${
+              isDark
+                ? 'bg-[#121212] border-neutral-800 text-neutral-200 hover:bg-[#1a1a1a]'
+                : 'bg-white/90 border-neutral-200/80 text-neutral-800 hover:bg-white'
+            }`}
+          >
+            <DownloadCloud className={`w-3.5 h-3.5 ${isDark ? 'text-neutral-400' : 'text-neutral-600'}`} />
+            <span>Quick Extract</span>
+          </button>
+        )}
 
         {/* Theme Switcher Pill (Light / All-Black Dark) */}
         <button
@@ -88,7 +103,7 @@ const MainDashboardContent: React.FC = () => {
           )}
         </button>
 
-        {/* User Pill Button with Avatar (Mindora style '+ Login [Avatar]') */}
+        {/* User Pill Button with Avatar (Mindora style '+ Admin [Avatar]') */}
         <div className={`inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border shadow-sm backdrop-blur-md ${
           isDark
             ? 'bg-[#121212] border-neutral-800 text-neutral-200'
@@ -119,12 +134,11 @@ const MainDashboardContent: React.FC = () => {
 
           {/* Dynamic Content Views */}
           <main className="mt-4">
-            {activeTab === 'overview' && <OverviewPage />}
-            {activeTab === 'sources' && <DataSourcesPage />}
-            {activeTab === 'extraction' && <DataExtractionPage />}
-            {activeTab === 'extracted-data' && <ExtractedDataPage />}
-            {activeTab === 'insights' && <InsightsPage />}
-            {activeTab === 'settings' && <SettingsPage />}
+            {activeTab === 'live-stream' ? (
+              <LiveStreamPage />
+            ) : (
+              <DataExtractionPage />
+            )}
           </main>
 
           {/* Integrated Bottom Ticker */}

@@ -17,6 +17,9 @@ export type EventType =
   | 'ORDER_CANCELLED'
   | 'ORDER_DELIVERED'
   | 'REVIEW_SUBMITTED'
+  | 'CLICKBAIT_CLICK'
+  | 'BANNER_CLICK'
+  | 'PROMO_CLICK'
   | 'LOGIN'
   | 'LOGOUT';
 
@@ -94,12 +97,13 @@ export interface SourceRecord {
 
 export interface ExtractionRecord {
   extraction_id: string;
-  source: SourceId;
+  source: SourceId | string;
   data_type: string;
   records_extracted: number;
   started_at: string;
   completed_at: string;
   status: 'SUCCESS' | 'PENDING' | 'FAILED';
+  extracted_data?: any;
 }
 
 export interface SessionRecord {
@@ -111,6 +115,6 @@ export interface SessionRecord {
 }
 
 export interface DataExtractionRequest {
-  source: SourceId;
+  source: SourceId | string;
   data_types: string[];
 }

@@ -19,6 +19,9 @@ export const LiveActivityFeed: React.FC = () => {
 
   const getEventText = (evt: any) => {
     switch (evt.event_type) {
+      case 'CLICKBAIT_CLICK':
+      case 'BANNER_CLICK':
+        return `Promo / Clickbait clicked: "${evt.product_name || 'Campaign Spotlight'}"`;
       case 'PRODUCT_VIEW':
         return `Product view: ${evt.product_name || evt.product_id || 'Item'}`;
       case 'ADD_TO_CART':
