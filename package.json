@@ -1,0 +1,14 @@
+{
+  "name": "retail-pulse-major-project",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Multi-Source E-Commerce Intelligence Suite (Retail Pulse, ShopPulse, TechMart & Connector)",
+  "scripts": {
+    "dev": "npx -y concurrently --kill-others -n \"connector,shoppulse,techmart,retailpulse\" -c \"magenta,blue,cyan,green\" \"npm --prefix retail-pulse-connector run dev\" \"npm --prefix Site1 run dev\" \"npm --prefix TechMart run dev\" \"npm --prefix RetailPulse run dev\"",
+    "dev:connector": "npm --prefix retail-pulse-connector run dev",
+    "dev:shoppulse": "npm --prefix Site1 run dev",
+    "dev:techmart": "npm --prefix TechMart run dev",
+    "dev:retailpulse": "npm --prefix RetailPulse run dev",
+    "build": "npm --prefix retail-pulse-connector run build && npm --prefix Site1 run build && npm --prefix TechMart run build && npm --prefix RetailPulse run build"
+  }
+}
