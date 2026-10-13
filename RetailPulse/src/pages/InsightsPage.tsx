@@ -53,9 +53,10 @@ export const InsightsPage: React.FC = () => {
     }
   };
 
-  const tooltipBg = theme === 'dark' ? '#070319' : '#FFFFFF';
-  const tooltipBorder = theme === 'dark' ? '#A068FF' : '#E2E8F0';
-  const tooltipColor = theme === 'dark' ? '#FFFFFF' : '#0F172A';
+  const isDark = theme === 'dark';
+  const tooltipBg = isDark ? '#0A0A0A' : '#FFFFFF';
+  const tooltipBorder = isDark ? '#262626' : '#E2E8F0';
+  const tooltipColor = isDark ? '#FFFFFF' : '#0F172A';
 
   return (
     <div className="space-y-8 animate-fadeIn">
@@ -75,7 +76,7 @@ export const InsightsPage: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="px-3.5 py-1.5 rounded-full bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-xs">
+          <div className="px-3.5 py-1.5 rounded-full bg-neutral-50 dark:bg-[#141414] border border-neutral-200 dark:border-neutral-800 text-xs">
             <span className="text-neutral-400">ENGINE:</span>{' '}
             <span className="font-bold text-neutral-900 dark:text-white">{selectedSource} Stream</span>
           </div>
@@ -100,13 +101,13 @@ export const InsightsPage: React.FC = () => {
           return (
             <div 
               key={idx}
-              className="p-6 rounded-[28px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 relative overflow-hidden group hover:border-neutral-400 transition-all flex flex-col justify-between"
+              className="p-6 rounded-[28px] bg-neutral-50 dark:bg-[#121212] border border-neutral-200/80 dark:border-neutral-800 relative overflow-hidden group hover:border-neutral-400 dark:hover:border-neutral-700 transition-all flex flex-col justify-between"
             >
               <div className="flex items-start justify-between mb-4">
                 <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 font-heading">
                   {kpi.title}
                 </span>
-                <div className="w-10 h-10 rounded-2xl bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 flex items-center justify-center text-neutral-900 dark:text-white group-hover:scale-105 transition-transform shadow-xs">
+                <div className="w-10 h-10 rounded-2xl bg-white dark:bg-[#18181b] border border-neutral-200 dark:border-neutral-700 flex items-center justify-center text-neutral-900 dark:text-white group-hover:scale-105 transition-transform shadow-xs">
                   <Icon className="w-5 h-5" />
                 </div>
               </div>
@@ -128,7 +129,7 @@ export const InsightsPage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* User Journey Funnel */}
-        <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-4">
+        <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-[#121212] border border-neutral-200/80 dark:border-neutral-800 space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-neutral-200/60 dark:border-neutral-800">
             <div>
               <h3 className="text-base font-bold text-neutral-950 dark:text-white font-heading flex items-center gap-2">
@@ -144,7 +145,7 @@ export const InsightsPage: React.FC = () => {
               <div key={step.step} className="space-y-1.5">
                 <div className="flex justify-between items-center text-xs">
                   <span className="font-bold text-neutral-800 dark:text-neutral-200 flex items-center gap-2 font-heading">
-                    <span className="w-5 h-5 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-neutral-900 text-[10px] flex items-center justify-center font-bold">
+                    <span className="w-5 h-5 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-black text-[10px] flex items-center justify-center font-bold">
                       {idx + 1}
                     </span>
                     {step.step}
@@ -155,7 +156,7 @@ export const InsightsPage: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="w-full bg-neutral-200/70 dark:bg-neutral-800 h-2.5 rounded-full overflow-hidden">
+                <div className="w-full bg-neutral-200/70 dark:bg-[#1a1a1d] h-2.5 rounded-full overflow-hidden">
                   <div
                     className="h-full bg-neutral-900 dark:bg-white rounded-full transition-all duration-300"
                     style={{ width: `${Math.max(8, 100 - idx * 25)}%` }}
@@ -167,7 +168,7 @@ export const InsightsPage: React.FC = () => {
         </div>
 
         {/* Cart Behavior & Abandonment */}
-        <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-4">
+        <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-[#121212] border border-neutral-200/80 dark:border-neutral-800 space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-neutral-200/60 dark:border-neutral-800">
             <div>
               <h3 className="text-base font-bold text-neutral-950 dark:text-white font-heading flex items-center gap-2">
@@ -176,34 +177,34 @@ export const InsightsPage: React.FC = () => {
               </h3>
               <p className="text-xs text-neutral-500 dark:text-neutral-400">Additions, views, checkout starts & abandonment rate</p>
             </div>
-            <span className="text-xs font-mono font-bold text-rose-500 bg-rose-50 dark:bg-rose-950/40 px-2.5 py-1 rounded-full border border-rose-200 dark:border-rose-800">
+            <span className="text-xs font-mono font-bold text-rose-500 bg-rose-50 dark:bg-rose-950/40 px-2.5 py-1 rounded-full border border-rose-200 dark:border-rose-900/60">
               Abandonment: {currentInsights.cartBehavior?.abandonmentRate || '28.4%'}
             </span>
           </div>
 
           <div className="grid grid-cols-2 gap-3.5 text-xs pt-1">
-            <div className="p-4 rounded-2xl bg-white dark:bg-neutral-800/80 border border-neutral-200/60 dark:border-neutral-700">
+            <div className="p-4 rounded-2xl bg-white dark:bg-[#18181b] border border-neutral-200/60 dark:border-neutral-700">
               <p className="text-neutral-500 dark:text-neutral-400">Cart Additions</p>
               <p className="text-xl font-bold text-emerald-600 dark:text-emerald-400 font-heading mt-1">
                 {currentInsights.cartBehavior?.cartAdditions.toLocaleString() || 428}
               </p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-white dark:bg-neutral-800/80 border border-neutral-200/60 dark:border-neutral-700">
+            <div className="p-4 rounded-2xl bg-white dark:bg-[#18181b] border border-neutral-200/60 dark:border-neutral-700">
               <p className="text-neutral-500 dark:text-neutral-400">Cart Removals</p>
               <p className="text-xl font-bold text-rose-500 font-heading mt-1">
                 {currentInsights.cartBehavior?.cartRemovals.toLocaleString() || 64}
               </p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-white dark:bg-neutral-800/80 border border-neutral-200/60 dark:border-neutral-700">
+            <div className="p-4 rounded-2xl bg-white dark:bg-[#18181b] border border-neutral-200/60 dark:border-neutral-700">
               <p className="text-neutral-500 dark:text-neutral-400">Checkout Starts</p>
               <p className="text-xl font-bold text-neutral-900 dark:text-white font-heading mt-1">
                 {currentInsights.cartBehavior?.checkoutStarts.toLocaleString() || 312}
               </p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-white dark:bg-neutral-800/80 border border-neutral-200/60 dark:border-neutral-700">
+            <div className="p-4 rounded-2xl bg-white dark:bg-[#18181b] border border-neutral-200/60 dark:border-neutral-700">
               <p className="text-neutral-500 dark:text-neutral-400">Completed Orders</p>
               <p className="text-xl font-bold text-neutral-900 dark:text-white font-heading mt-1">
                 {currentInsights.cartBehavior?.completedOrders.toLocaleString() || 184}
@@ -215,7 +216,7 @@ export const InsightsPage: React.FC = () => {
       </div>
 
       {/* TOP SEARCHES & DEMAND SIGNALS */}
-      <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-4">
+      <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-[#121212] border border-neutral-200/80 dark:border-neutral-800 space-y-4">
         <div className="flex items-center justify-between pb-3 border-b border-neutral-200/60 dark:border-neutral-800">
           <div>
             <h3 className="text-base font-bold text-neutral-950 dark:text-white font-heading flex items-center gap-2">
@@ -228,7 +229,7 @@ export const InsightsPage: React.FC = () => {
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-white dark:bg-neutral-800/80 border-b border-neutral-200/60 dark:border-neutral-800 text-neutral-500 dark:text-neutral-400 uppercase font-medium">
+            <thead className="bg-white dark:bg-[#18181b] border-b border-neutral-200/60 dark:border-neutral-800 text-neutral-500 dark:text-neutral-400 uppercase font-medium">
               <tr>
                 <th className="p-3">Search Query</th>
                 <th className="p-3 text-center">Search Frequency</th>
@@ -238,7 +239,7 @@ export const InsightsPage: React.FC = () => {
             </thead>
             <tbody className="divide-y divide-neutral-100 dark:divide-neutral-800 text-neutral-700 dark:text-neutral-300">
               {(currentInsights.searchInsights || []).map((s, idx) => (
-                <tr key={idx} className="hover:bg-neutral-100/60 dark:hover:bg-neutral-800/40">
+                <tr key={idx} className="hover:bg-neutral-100/60 dark:hover:bg-[#18181b]">
                   <td className="p-3 font-semibold text-neutral-900 dark:text-white font-mono">"{s.query}"</td>
                   <td className="p-3 text-center font-bold">{s.count} searches</td>
                   <td className="p-3 text-center font-mono text-neutral-400">{s.noResultsCount}</td>
@@ -258,11 +259,11 @@ export const InsightsPage: React.FC = () => {
         </div>
       </div>
 
-      {/* 4 MODERN CHARTS GRID */}
+      {/* 4 ALL-BLACK MODERN CHARTS GRID */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* CHART 1: Revenue Trend */}
-        <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-4">
+        <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-[#121212] border border-neutral-200/80 dark:border-neutral-800 space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-neutral-200/60 dark:border-neutral-800">
             <div>
               <h3 className="text-base font-bold text-neutral-950 dark:text-white font-heading">
@@ -280,12 +281,12 @@ export const InsightsPage: React.FC = () => {
               <AreaChart data={currentInsights.revenueTrend}>
                 <defs>
                   <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor={theme === 'dark' ? '#A068FF' : '#0F172A'} stopOpacity={0.25} />
-                    <stop offset="95%" stopColor={theme === 'dark' ? '#A068FF' : '#0F172A'} stopOpacity={0} />
+                    <stop offset="5%" stopColor={isDark ? '#FFFFFF' : '#0F172A'} stopOpacity={isDark ? 0.2 : 0.25} />
+                    <stop offset="95%" stopColor={isDark ? '#FFFFFF' : '#0F172A'} stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <XAxis dataKey="period" stroke="#94a3b8" fontSize={11} tickLine={false} />
-                <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} tickFormatter={(val) => `₹${val / 1000}k`} />
+                <XAxis dataKey="period" stroke={isDark ? '#71717a' : '#94a3b8'} fontSize={11} tickLine={false} />
+                <YAxis stroke={isDark ? '#71717a' : '#94a3b8'} fontSize={11} tickLine={false} tickFormatter={(val) => `₹${val / 1000}k`} />
                 <Tooltip 
                   contentStyle={{ 
                     backgroundColor: tooltipBg, 
@@ -293,14 +294,14 @@ export const InsightsPage: React.FC = () => {
                     borderRadius: '16px', 
                     fontSize: '12px',
                     color: tooltipColor,
-                    boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)'
+                    boxShadow: '0 10px 25px -5px rgba(0,0,0,0.5)'
                   }} 
                   formatter={(val: any) => [`₹${Number(val).toLocaleString()}`, 'Revenue']}
                 />
                 <Area 
                   type="monotone" 
                   dataKey="revenue" 
-                  stroke={theme === 'dark' ? '#A068FF' : '#0F172A'} 
+                  stroke={isDark ? '#FFFFFF' : '#0F172A'} 
                   strokeWidth={2.5} 
                   fillOpacity={1} 
                   fill="url(#colorRev)" 
@@ -311,7 +312,7 @@ export const InsightsPage: React.FC = () => {
         </div>
 
         {/* CHART 2: Sales by Category / Department */}
-        <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-4">
+        <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-[#121212] border border-neutral-200/80 dark:border-neutral-800 space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-neutral-200/60 dark:border-neutral-800">
             <div>
               <h3 className="text-base font-bold text-neutral-950 dark:text-white font-heading">
@@ -325,8 +326,8 @@ export const InsightsPage: React.FC = () => {
           <div className="h-64 w-full flex items-center justify-center">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={currentInsights.categoryBreakdown} layout="vertical">
-                <XAxis type="number" stroke="#94a3b8" fontSize={11} tickFormatter={(v) => `₹${v / 1000}k`} />
-                <YAxis dataKey="name" type="category" stroke="#94a3b8" fontSize={11} width={110} tickLine={false} />
+                <XAxis type="number" stroke={isDark ? '#71717a' : '#94a3b8'} fontSize={11} tickFormatter={(v) => `₹${v / 1000}k`} />
+                <YAxis dataKey="name" type="category" stroke={isDark ? '#71717a' : '#94a3b8'} fontSize={11} width={110} tickLine={false} />
                 <Tooltip 
                   contentStyle={{ 
                     backgroundColor: tooltipBg, 
@@ -334,7 +335,7 @@ export const InsightsPage: React.FC = () => {
                     borderRadius: '16px', 
                     fontSize: '12px',
                     color: tooltipColor,
-                    boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)'
+                    boxShadow: '0 10px 25px -5px rgba(0,0,0,0.5)'
                   }}
                   formatter={(val: any) => [`₹${Number(val).toLocaleString()}`, 'Revenue']}
                 />
@@ -349,7 +350,7 @@ export const InsightsPage: React.FC = () => {
         </div>
 
         {/* CHART 3: Top Products */}
-        <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-4">
+        <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-[#121212] border border-neutral-200/80 dark:border-neutral-800 space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-neutral-200/60 dark:border-neutral-800">
             <div>
               <h3 className="text-base font-bold text-neutral-950 dark:text-white font-heading">
@@ -363,8 +364,8 @@ export const InsightsPage: React.FC = () => {
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={currentInsights.topProducts}>
-                <XAxis dataKey="name" stroke="#94a3b8" fontSize={10} tickLine={false} tickFormatter={(t) => t.split(' ')[0]} />
-                <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} />
+                <XAxis dataKey="name" stroke={isDark ? '#71717a' : '#94a3b8'} fontSize={10} tickLine={false} tickFormatter={(t) => t.split(' ')[0]} />
+                <YAxis stroke={isDark ? '#71717a' : '#94a3b8'} fontSize={11} tickLine={false} />
                 <Tooltip 
                   contentStyle={{ 
                     backgroundColor: tooltipBg, 
@@ -372,18 +373,18 @@ export const InsightsPage: React.FC = () => {
                     borderRadius: '16px', 
                     fontSize: '12px',
                     color: tooltipColor,
-                    boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)'
+                    boxShadow: '0 10px 25px -5px rgba(0,0,0,0.5)'
                   }}
                   formatter={(val: any) => [`${val} Units`, 'Volume Sold']}
                 />
-                <Bar dataKey="unitsSold" fill={theme === 'dark' ? '#A068FF' : '#0F172A'} radius={[8, 8, 0, 0]} />
+                <Bar dataKey="unitsSold" fill={isDark ? '#FFFFFF' : '#0F172A'} radius={[8, 8, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         </div>
 
         {/* CHART 4: Status Distribution */}
-        <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-4">
+        <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-[#121212] border border-neutral-200/80 dark:border-neutral-800 space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-neutral-200/60 dark:border-neutral-800">
             <div>
               <h3 className="text-base font-bold text-neutral-950 dark:text-white font-heading">
@@ -417,7 +418,7 @@ export const InsightsPage: React.FC = () => {
                     borderRadius: '16px', 
                     fontSize: '12px',
                     color: tooltipColor,
-                    boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)'
+                    boxShadow: '0 10px 25px -5px rgba(0,0,0,0.5)'
                   }}
                   formatter={(val: any) => [`${val} records`, 'Count']}
                 />

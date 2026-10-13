@@ -59,8 +59,8 @@ export const DataSourcesPage: React.FC = () => {
           onClick={() => handleSelectSource('ShopPulse')}
           className={`p-6 rounded-[28px] relative overflow-hidden transition-all border cursor-pointer flex flex-col justify-between ${
             selectedSource === 'ShopPulse'
-              ? 'bg-neutral-950 text-white dark:bg-white dark:text-neutral-950 shadow-xl'
-              : 'bg-neutral-50 dark:bg-neutral-900/60 border-neutral-200/80 dark:border-neutral-800 hover:border-neutral-400'
+              ? 'bg-neutral-950 text-white dark:bg-[#18181b] dark:text-white dark:border-white/50 shadow-xl'
+              : 'bg-neutral-50 dark:bg-[#121212] border-neutral-200/80 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-700'
           }`}
         >
           {selectedSource === 'ShopPulse' && (
@@ -72,20 +72,20 @@ export const DataSourcesPage: React.FC = () => {
           <div>
             <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-5 ${
               selectedSource === 'ShopPulse'
-                ? 'bg-white/10 dark:bg-neutral-100 text-white dark:text-neutral-900'
-                : 'bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white shadow-xs'
+                ? 'bg-white/10 dark:bg-white text-white dark:text-black'
+                : 'bg-white dark:bg-[#18181b] text-neutral-900 dark:text-white shadow-xs'
             }`}>
               <ShoppingBag className="w-6 h-6" />
             </div>
 
             <h2 className="text-xl font-bold font-heading">ShopPulse</h2>
-            <p className={`text-xs mb-4 ${selectedSource === 'ShopPulse' ? 'text-neutral-300 dark:text-neutral-600' : 'text-neutral-500 dark:text-neutral-400'}`}>
+            <p className={`text-xs mb-4 ${selectedSource === 'ShopPulse' ? 'text-neutral-300 dark:text-neutral-400' : 'text-neutral-500 dark:text-neutral-400'}`}>
               General Apparel & Lifestyle Storefront
             </p>
 
             <div className="space-y-2 mb-6 text-xs">
               <p className="font-bold">Data Available:</p>
-              <ul className={`space-y-1 ${selectedSource === 'ShopPulse' ? 'text-neutral-300 dark:text-neutral-600' : 'text-neutral-500 dark:text-neutral-400'}`}>
+              <ul className={`space-y-1 ${selectedSource === 'ShopPulse' ? 'text-neutral-300 dark:text-neutral-400' : 'text-neutral-500 dark:text-neutral-400'}`}>
                 <li className="flex items-center gap-2">● Customers & Orders</li>
                 <li className="flex items-center gap-2">● Products & Reviews</li>
                 <li className="flex items-center gap-2">● Behavioral Dwell Events</li>
@@ -96,7 +96,7 @@ export const DataSourcesPage: React.FC = () => {
           <div>
             <div className={`flex items-center justify-between pt-4 border-t mb-4 text-xs ${
               selectedSource === 'ShopPulse'
-                ? 'border-white/20 dark:border-neutral-300'
+                ? 'border-white/20 dark:border-neutral-700'
                 : 'border-neutral-200 dark:border-neutral-800 text-neutral-500'
             }`}>
               <span>Status:</span>
@@ -112,7 +112,7 @@ export const DataSourcesPage: React.FC = () => {
               }}
               className={`w-full py-2.5 rounded-full font-bold text-xs transition-all cursor-pointer ${
                 selectedSource === 'ShopPulse'
-                  ? 'bg-white text-neutral-950 dark:bg-neutral-950 dark:text-white'
+                  ? 'bg-white text-neutral-950 dark:bg-white dark:text-black'
                   : 'pill-btn-dark'
               }`}
             >
@@ -126,8 +126,8 @@ export const DataSourcesPage: React.FC = () => {
           onClick={() => handleSelectSource('TechMart')}
           className={`p-6 rounded-[28px] relative overflow-hidden transition-all border cursor-pointer flex flex-col justify-between ${
             selectedSource === 'TechMart'
-              ? 'bg-neutral-950 text-white dark:bg-white dark:text-neutral-950 shadow-xl'
-              : 'bg-neutral-50 dark:bg-neutral-900/60 border-neutral-200/80 dark:border-neutral-800 hover:border-neutral-400'
+              ? 'bg-neutral-950 text-white dark:bg-[#18181b] dark:text-white dark:border-white/50 shadow-xl'
+              : 'bg-neutral-50 dark:bg-[#121212] border-neutral-200/80 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-700'
           }`}
         >
           {selectedSource === 'TechMart' && (
@@ -139,20 +139,20 @@ export const DataSourcesPage: React.FC = () => {
           <div>
             <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-5 ${
               selectedSource === 'TechMart'
-                ? 'bg-white/10 dark:bg-neutral-100 text-white dark:text-neutral-900'
-                : 'bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white shadow-xs'
+                ? 'bg-white/10 dark:bg-white text-white dark:text-black'
+                : 'bg-white dark:bg-[#18181b] text-neutral-900 dark:text-white shadow-xs'
             }`}>
               <Cpu className="w-6 h-6" />
             </div>
 
             <h2 className="text-xl font-bold font-heading">TechMart</h2>
-            <p className={`text-xs mb-4 ${selectedSource === 'TechMart' ? 'text-neutral-300 dark:text-neutral-600' : 'text-neutral-500 dark:text-neutral-400'}`}>
+            <p className={`text-xs mb-4 ${selectedSource === 'TechMart' ? 'text-neutral-300 dark:text-neutral-400' : 'text-neutral-500 dark:text-neutral-400'}`}>
               Consumer Tech & Hardware Storefront
             </p>
 
             <div className="space-y-2 mb-6 text-xs">
               <p className="font-bold">Data Available:</p>
-              <ul className={`space-y-1 ${selectedSource === 'TechMart' ? 'text-neutral-300 dark:text-neutral-600' : 'text-neutral-500 dark:text-neutral-400'}`}>
+              <ul className={`space-y-1 ${selectedSource === 'TechMart' ? 'text-neutral-300 dark:text-neutral-400' : 'text-neutral-500 dark:text-neutral-400'}`}>
                 <li className="flex items-center gap-2">● Users & SKU Specs</li>
                 <li className="flex items-center gap-2">● Transactions & Inventory</li>
                 <li className="flex items-center gap-2">● Hardware Search Logs</li>
@@ -163,7 +163,7 @@ export const DataSourcesPage: React.FC = () => {
           <div>
             <div className={`flex items-center justify-between pt-4 border-t mb-4 text-xs ${
               selectedSource === 'TechMart'
-                ? 'border-white/20 dark:border-neutral-300'
+                ? 'border-white/20 dark:border-neutral-700'
                 : 'border-neutral-200 dark:border-neutral-800 text-neutral-500'
             }`}>
               <span>Status:</span>
@@ -179,7 +179,7 @@ export const DataSourcesPage: React.FC = () => {
               }}
               className={`w-full py-2.5 rounded-full font-bold text-xs transition-all cursor-pointer ${
                 selectedSource === 'TechMart'
-                  ? 'bg-white text-neutral-950 dark:bg-neutral-950 dark:text-white'
+                  ? 'bg-white text-neutral-950 dark:bg-white dark:text-black'
                   : 'pill-btn-dark'
               }`}
             >
@@ -193,8 +193,8 @@ export const DataSourcesPage: React.FC = () => {
           onClick={() => handleSelectSource('ALL SOURCES')}
           className={`p-6 rounded-[28px] relative overflow-hidden transition-all border cursor-pointer flex flex-col justify-between ${
             selectedSource === 'ALL SOURCES'
-              ? 'bg-neutral-950 text-white dark:bg-white dark:text-neutral-950 shadow-xl'
-              : 'bg-neutral-50 dark:bg-neutral-900/60 border-neutral-200/80 dark:border-neutral-800 hover:border-neutral-400'
+              ? 'bg-neutral-950 text-white dark:bg-[#18181b] dark:text-white dark:border-white/50 shadow-xl'
+              : 'bg-neutral-50 dark:bg-[#121212] border-neutral-200/80 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-700'
           }`}
         >
           {selectedSource === 'ALL SOURCES' && (
@@ -206,20 +206,20 @@ export const DataSourcesPage: React.FC = () => {
           <div>
             <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-5 ${
               selectedSource === 'ALL SOURCES'
-                ? 'bg-white/10 dark:bg-neutral-100 text-white dark:text-neutral-900'
-                : 'bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white shadow-xs'
+                ? 'bg-white/10 dark:bg-white text-white dark:text-black'
+                : 'bg-white dark:bg-[#18181b] text-neutral-900 dark:text-white shadow-xs'
             }`}>
               <Globe className="w-6 h-6" />
             </div>
 
             <h2 className="text-xl font-bold font-heading">ALL SOURCES</h2>
-            <p className={`text-xs mb-4 ${selectedSource === 'ALL SOURCES' ? 'text-neutral-300 dark:text-neutral-600' : 'text-neutral-500 dark:text-neutral-400'}`}>
+            <p className={`text-xs mb-4 ${selectedSource === 'ALL SOURCES' ? 'text-neutral-300 dark:text-neutral-400' : 'text-neutral-500 dark:text-neutral-400'}`}>
               Combined Multi-Store Pipeline
             </p>
 
             <div className="space-y-2 mb-6 text-xs">
               <p className="font-bold">Combined Streams:</p>
-              <ul className={`space-y-1 ${selectedSource === 'ALL SOURCES' ? 'text-neutral-300 dark:text-neutral-600' : 'text-neutral-500 dark:text-neutral-400'}`}>
+              <ul className={`space-y-1 ${selectedSource === 'ALL SOURCES' ? 'text-neutral-300 dark:text-neutral-400' : 'text-neutral-500 dark:text-neutral-400'}`}>
                 <li className="flex items-center gap-2">● Normalized Canonical Events</li>
                 <li className="flex items-center gap-2">● Aggregated Revenue Insights</li>
                 <li className="flex items-center gap-2">● Cross-Store Behavioral Funnel</li>
@@ -230,7 +230,7 @@ export const DataSourcesPage: React.FC = () => {
           <div>
             <div className={`flex items-center justify-between pt-4 border-t mb-4 text-xs ${
               selectedSource === 'ALL SOURCES'
-                ? 'border-white/20 dark:border-neutral-300'
+                ? 'border-white/20 dark:border-neutral-700'
                 : 'border-neutral-200 dark:border-neutral-800 text-neutral-500'
             }`}>
               <span>Status:</span>
@@ -246,7 +246,7 @@ export const DataSourcesPage: React.FC = () => {
               }}
               className={`w-full py-2.5 rounded-full font-bold text-xs transition-all cursor-pointer ${
                 selectedSource === 'ALL SOURCES'
-                  ? 'bg-white text-neutral-950 dark:bg-neutral-950 dark:text-white'
+                  ? 'bg-white text-neutral-950 dark:bg-white dark:text-black'
                   : 'pill-btn-dark'
               }`}
             >
@@ -258,10 +258,10 @@ export const DataSourcesPage: React.FC = () => {
       </div>
 
       {/* SELECTED SOURCE SUMMARY BANNER */}
-      <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-6">
+      <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-[#121212] border border-neutral-200/80 dark:border-neutral-800 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-neutral-200/60 dark:border-neutral-800">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-950 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-black flex items-center justify-center">
               <Database className="w-5 h-5" />
             </div>
             <div>
@@ -282,7 +282,7 @@ export const DataSourcesPage: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-          <div className="p-4 rounded-2xl bg-white dark:bg-neutral-800/70 border border-neutral-200/60 dark:border-neutral-700">
+          <div className="p-4 rounded-2xl bg-white dark:bg-[#18181b] border border-neutral-200/60 dark:border-neutral-700">
             <span className="text-neutral-500 dark:text-neutral-400 flex items-center gap-1.5 mb-1 font-medium">
               <Layers className="w-3.5 h-3.5 text-neutral-900 dark:text-white" /> Architecture
             </span>
@@ -291,7 +291,7 @@ export const DataSourcesPage: React.FC = () => {
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-white dark:bg-neutral-800/70 border border-neutral-200/60 dark:border-neutral-700">
+          <div className="p-4 rounded-2xl bg-white dark:bg-[#18181b] border border-neutral-200/60 dark:border-neutral-700">
             <span className="text-neutral-500 dark:text-neutral-400 flex items-center gap-1.5 mb-1 font-medium">
               <FileSpreadsheet className="w-3.5 h-3.5 text-neutral-900 dark:text-white" /> Estimated Record Pool
             </span>
@@ -300,7 +300,7 @@ export const DataSourcesPage: React.FC = () => {
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-white dark:bg-neutral-800/70 border border-neutral-200/60 dark:border-neutral-700">
+          <div className="p-4 rounded-2xl bg-white dark:bg-[#18181b] border border-neutral-200/60 dark:border-neutral-700">
             <span className="text-neutral-500 dark:text-neutral-400 flex items-center gap-1.5 mb-1 font-medium">
               <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" /> Pipeline Status
             </span>

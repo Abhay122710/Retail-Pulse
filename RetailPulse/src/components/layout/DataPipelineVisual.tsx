@@ -23,7 +23,7 @@ export const DataPipelineVisual: React.FC = () => {
   ];
 
   return (
-    <div className="w-full mb-6 flex flex-col md:flex-row items-center justify-between gap-4 p-4 rounded-[24px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 transition-all">
+    <div className="w-full mb-6 flex flex-col md:flex-row items-center justify-between gap-4 p-4 rounded-[24px] bg-neutral-50 dark:bg-[#121212] border border-neutral-200/80 dark:border-neutral-800 transition-all">
       
       {/* Visual Pipeline Flow */}
       <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
@@ -41,16 +41,16 @@ export const DataPipelineVisual: React.FC = () => {
                 onClick={() => setActiveTab(step.id)}
                 className={`flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
                   isActive
-                    ? 'bg-neutral-950 text-white dark:bg-white dark:text-neutral-950 shadow-sm scale-105'
+                    ? 'bg-neutral-950 text-white dark:bg-white dark:text-black shadow-sm scale-105 font-bold'
                     : isPassed
                     ? 'bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-500/20 text-emerald-700 dark:text-emerald-400'
-                    : 'bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white'
+                    : 'bg-white dark:bg-[#18181b] border border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-300 hover:text-neutral-950 dark:hover:text-white'
                 }`}
               >
                 {isPassed ? (
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                 ) : (
-                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-white dark:text-neutral-950' : 'text-neutral-500 dark:text-neutral-400'}`} />
+                  <Icon className={`w-3.5 h-3.5 ${isActive ? 'text-white dark:text-black' : 'text-neutral-500 dark:text-neutral-400'}`} />
                 )}
                 <span>{step.label}</span>
               </button>
@@ -67,7 +67,7 @@ export const DataPipelineVisual: React.FC = () => {
       <div className="flex items-center gap-3 flex-wrap">
         
         {/* Connector Status Indicator */}
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-xs">
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white dark:bg-[#18181b] border border-neutral-200 dark:border-neutral-700 text-xs">
           {isConnectorConnected ? (
             <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-bold">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -82,9 +82,9 @@ export const DataPipelineVisual: React.FC = () => {
         </div>
 
         {/* Selected Source Indicator */}
-        <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-xs shrink-0">
+        <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white dark:bg-[#18181b] border border-neutral-200 dark:border-neutral-700 text-xs shrink-0">
           <span className="text-neutral-400 font-medium">SOURCE:</span>
-          <span className="px-2 py-0.5 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 font-bold text-[11px]">
+          <span className="px-2.5 py-0.5 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-black font-bold text-[11px]">
             {selectedSource}
           </span>
           <button

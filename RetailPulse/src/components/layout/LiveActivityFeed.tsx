@@ -47,12 +47,12 @@ export const LiveActivityFeed: React.FC = () => {
   };
 
   return (
-    <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-4">
+    <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-[#121212] border border-neutral-200/80 dark:border-neutral-800 space-y-4">
       
       {/* Header */}
       <div className="flex items-center justify-between pb-3 border-b border-neutral-200/60 dark:border-neutral-800">
         <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-950 flex items-center justify-center">
+          <div className="w-7 h-7 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-black flex items-center justify-center">
             <Activity className="w-3.5 h-3.5 animate-pulse" />
           </div>
           <div>
@@ -73,7 +73,7 @@ export const LiveActivityFeed: React.FC = () => {
 
           <button
             onClick={() => sendTestEvent()}
-            className="px-3.5 py-1.5 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 hover:bg-black text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
+            className="px-3.5 py-1.5 rounded-full bg-neutral-900 text-white dark:bg-white dark:text-black hover:bg-black dark:hover:bg-neutral-200 text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer shadow-xs"
             title="Inject test telemetry event"
           >
             <Send className="w-3 h-3" />
@@ -88,7 +88,7 @@ export const LiveActivityFeed: React.FC = () => {
           liveEvents.map((evt) => (
             <div
               key={evt.event_id}
-              className="p-3.5 rounded-2xl bg-white dark:bg-neutral-800/70 border border-neutral-200/60 dark:border-neutral-700 flex items-center justify-between gap-3 text-xs hover:border-neutral-400 transition-colors"
+              className="p-3.5 rounded-2xl bg-white dark:bg-[#18181b] border border-neutral-200/60 dark:border-neutral-800 flex items-center justify-between gap-3 text-xs hover:border-neutral-400 dark:hover:border-neutral-700 transition-colors"
             >
               <div className="flex items-center gap-3 min-w-0">
                 <span
@@ -118,10 +118,10 @@ export const LiveActivityFeed: React.FC = () => {
             </div>
           ))
         ) : (
-          <div className="p-8 text-center text-neutral-400 dark:text-neutral-500 text-xs italic bg-white dark:bg-neutral-800/40 rounded-2xl border border-neutral-200/40 dark:border-neutral-800">
+          <div className="p-8 text-center text-neutral-400 dark:text-neutral-500 text-xs italic bg-white dark:bg-[#18181b] rounded-2xl border border-neutral-200/40 dark:border-neutral-800">
             {isConnectorConnected
               ? 'Listening for storefront clickstream events... Browse ShopPulse or TechMart to see live events stream here.'
-              : 'Connector offline. Ensure connector server is running on port 3001.'}
+              : 'Connector offline. Ensure connector server is running on port 5000.'}
           </div>
         )}
       </div>

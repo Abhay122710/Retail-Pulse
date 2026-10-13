@@ -83,26 +83,26 @@ export const ExtractedDataPage: React.FC = () => {
 
       {/* Summary Header Banner */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800">
+        <div className="p-4 rounded-2xl bg-neutral-50 dark:bg-[#121212] border border-neutral-200/80 dark:border-neutral-800">
           <p className="text-xs text-neutral-500 dark:text-neutral-400">Source Platform</p>
           <p className="text-base font-bold text-neutral-950 dark:text-white font-heading mt-0.5">{selectedSource}</p>
         </div>
 
-        <div className="p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800">
+        <div className="p-4 rounded-2xl bg-neutral-50 dark:bg-[#121212] border border-neutral-200/80 dark:border-neutral-800">
           <p className="text-xs text-neutral-500 dark:text-neutral-400">Extraction Time</p>
           <p className="text-sm font-semibold text-neutral-800 dark:text-neutral-200 mt-0.5">
             {lastExtractionResult ? lastExtractionResult.timestamp : 'Just Now'}
           </p>
         </div>
 
-        <div className="p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800">
+        <div className="p-4 rounded-2xl bg-neutral-50 dark:bg-[#121212] border border-neutral-200/80 dark:border-neutral-800">
           <p className="text-xs text-neutral-500 dark:text-neutral-400">Cached Record Pool</p>
           <p className="text-base font-bold text-neutral-950 dark:text-white font-heading mt-0.5">
             {lastExtractionResult ? lastExtractionResult.recordsExtracted.toLocaleString() : '4,820'}
           </p>
         </div>
 
-        <div className="p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800">
+        <div className="p-4 rounded-2xl bg-neutral-50 dark:bg-[#121212] border border-neutral-200/80 dark:border-neutral-800">
           <p className="text-xs text-neutral-500 dark:text-neutral-400">Schema Type</p>
           <p className="text-sm font-semibold text-emerald-600 dark:text-emerald-400 mt-0.5">
             {selectedSource === 'ShopPulse' ? 'Order Stream' : 'Transaction Stream'}
@@ -111,7 +111,7 @@ export const ExtractedDataPage: React.FC = () => {
       </div>
 
       {/* Controls Bar: Search & Status Filter */}
-      <div className="p-4 rounded-2xl bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="p-4 rounded-2xl bg-neutral-50 dark:bg-[#121212] border border-neutral-200/80 dark:border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4">
         
         <div className="relative w-full sm:w-80">
           <input
@@ -122,7 +122,7 @@ export const ExtractedDataPage: React.FC = () => {
               setSearchQuery(e.target.value);
               setCurrentPage(1);
             }}
-            className="w-full pl-9 pr-4 py-2 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-full text-xs text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-1 focus:ring-neutral-900"
+            className="w-full pl-9 pr-4 py-2 bg-white dark:bg-[#18181b] border border-neutral-200 dark:border-neutral-700 rounded-full text-xs text-neutral-900 dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-1 focus:ring-neutral-900 dark:focus:ring-white"
           />
           <Search className="w-4 h-4 text-neutral-400 absolute left-3 top-2.5" />
         </div>
@@ -137,7 +137,7 @@ export const ExtractedDataPage: React.FC = () => {
               setSelectedStatusFilter(e.target.value);
               setCurrentPage(1);
             }}
-            className="bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-xs text-neutral-900 dark:text-white px-3 py-1.5 rounded-full focus:outline-none cursor-pointer"
+            className="bg-white dark:bg-[#18181b] border border-neutral-200 dark:border-neutral-700 text-xs text-neutral-900 dark:text-white px-3 py-1.5 rounded-full focus:outline-none cursor-pointer"
           >
             <option value="All">All Statuses</option>
             {selectedSource === 'ShopPulse' ? (
@@ -161,10 +161,10 @@ export const ExtractedDataPage: React.FC = () => {
       </div>
 
       {/* EXTRACTED DATA TABLE */}
-      <div className="rounded-[24px] bg-white dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 overflow-hidden shadow-xs">
+      <div className="rounded-[24px] bg-white dark:bg-[#0f0f10] border border-neutral-200/80 dark:border-neutral-800 overflow-hidden shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-neutral-50 dark:bg-neutral-800/80 border-b border-neutral-200/60 dark:border-neutral-800 text-neutral-500 dark:text-neutral-400 uppercase font-medium tracking-wider text-[11px]">
+            <thead className="bg-neutral-50 dark:bg-[#151517] border-b border-neutral-200/60 dark:border-neutral-800 text-neutral-500 dark:text-neutral-400 uppercase font-medium tracking-wider text-[11px]">
               {selectedSource === 'ShopPulse' ? (
                 <tr>
                   <th className="p-4">Order ID</th>
@@ -189,13 +189,13 @@ export const ExtractedDataPage: React.FC = () => {
                 </tr>
               )}
             </thead>
-            <tbody className="divide-y divide-neutral-100 dark:divide-neutral-800/60 text-neutral-800 dark:text-neutral-200">
+            <tbody className="divide-y divide-neutral-100 dark:divide-neutral-800 text-neutral-800 dark:text-neutral-200">
               {paginatedRecords.length > 0 ? (
                 paginatedRecords.map((rec) => {
                   if (selectedSource === 'ShopPulse') {
                     const sp = rec as ShopPulseRecord;
                     return (
-                      <tr key={sp.id} className="hover:bg-neutral-50/80 dark:hover:bg-neutral-800/40 transition-colors">
+                      <tr key={sp.id} className="hover:bg-neutral-50/80 dark:hover:bg-[#18181b] transition-colors">
                         <td className="p-4 font-mono font-bold text-neutral-900 dark:text-white">{sp.orderId}</td>
                         <td className="p-4 font-medium">{sp.customer}</td>
                         <td className="p-4">{sp.product}</td>
@@ -223,7 +223,7 @@ export const ExtractedDataPage: React.FC = () => {
                   } else {
                     const tm = rec as TechMartRecord;
                     return (
-                      <tr key={tm.id} className="hover:bg-neutral-50/80 dark:hover:bg-neutral-800/40 transition-colors">
+                      <tr key={tm.id} className="hover:bg-neutral-50/80 dark:hover:bg-[#18181b] transition-colors">
                         <td className="p-4 font-mono font-bold text-neutral-900 dark:text-white">{tm.transactionId}</td>
                         <td className="p-4 font-medium">{tm.user}</td>
                         <td className="p-4 font-mono text-neutral-500 text-[11px]">{tm.sku}</td>
@@ -264,7 +264,7 @@ export const ExtractedDataPage: React.FC = () => {
         </div>
 
         {/* Pagination Footer */}
-        <div className="p-4 bg-neutral-50 dark:bg-neutral-800/60 border-t border-neutral-200/60 dark:border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+        <div className="p-4 bg-neutral-50 dark:bg-[#121212] border-t border-neutral-200/60 dark:border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
           <p className="text-neutral-500 dark:text-neutral-400">
             Showing {filteredRecords.length > 0 ? (currentPage - 1) * pageSize + 1 : 0} to{' '}
             {Math.min(currentPage * pageSize, filteredRecords.length)} of {filteredRecords.length} records
@@ -274,17 +274,17 @@ export const ExtractedDataPage: React.FC = () => {
             <button
               onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
               disabled={currentPage === 1}
-              className="p-1.5 rounded-full bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-neutral-100 transition-colors"
+              className="p-1.5 rounded-full bg-white dark:bg-[#18181b] border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-neutral-100 dark:hover:bg-[#202024] transition-colors"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <span className="px-3 py-1 rounded-full bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 font-mono text-neutral-900 dark:text-white font-semibold">
+            <span className="px-3 py-1 rounded-full bg-white dark:bg-[#18181b] border border-neutral-200 dark:border-neutral-700 font-mono text-neutral-900 dark:text-white font-semibold">
               {currentPage} / {totalPages}
             </span>
             <button
               onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
               disabled={currentPage === totalPages}
-              className="p-1.5 rounded-full bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-neutral-100 transition-colors"
+              className="p-1.5 rounded-full bg-white dark:bg-[#18181b] border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-neutral-100 dark:hover:bg-[#202024] transition-colors"
             >
               <ChevronRight className="w-4 h-4" />
             </button>

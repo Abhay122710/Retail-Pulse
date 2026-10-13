@@ -52,7 +52,7 @@ export const DataExtractionPage: React.FC = () => {
         </div>
 
         {/* Selected Source Header Badge */}
-        <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-xs self-start sm:self-auto">
+        <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-neutral-50 dark:bg-[#141414] border border-neutral-200 dark:border-neutral-800 text-xs self-start sm:self-auto">
           <span className="text-neutral-400 font-semibold">SOURCE</span>
           <span className="font-bold text-neutral-950 dark:text-white font-heading">{selectedSource}</span>
           <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-bold text-[11px] pl-2 border-l border-neutral-200 dark:border-neutral-700">
@@ -62,7 +62,7 @@ export const DataExtractionPage: React.FC = () => {
       </div>
 
       {/* MAIN EXTRACTION CARD */}
-      <div className="p-6 sm:p-8 rounded-[28px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-8">
+      <div className="p-6 sm:p-8 rounded-[28px] bg-neutral-50 dark:bg-[#121212] border border-neutral-200/80 dark:border-neutral-800 space-y-8">
         
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-neutral-200/60 dark:border-neutral-800">
           <div>
@@ -102,13 +102,13 @@ export const DataExtractionPage: React.FC = () => {
                 onClick={() => toggleDataType(type)}
                 className={`p-4 rounded-2xl cursor-pointer border transition-all flex items-center justify-between group ${
                   isChecked
-                    ? 'bg-neutral-950 text-white dark:bg-white dark:text-neutral-950 border-neutral-950 dark:border-white shadow-md'
-                    : 'bg-white dark:bg-neutral-800/80 border-neutral-200/80 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:border-neutral-400'
+                    ? 'bg-neutral-950 text-white dark:bg-white dark:text-black border-neutral-950 dark:border-white shadow-md'
+                    : 'bg-white dark:bg-[#18181b] border-neutral-200/80 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 hover:border-neutral-400 dark:hover:border-neutral-700'
                 }`}
               >
                 <div className="flex items-center gap-3">
                   {isChecked ? (
-                    <CheckSquare className="w-5 h-5 text-white dark:text-neutral-950 shrink-0" />
+                    <CheckSquare className="w-5 h-5 text-white dark:text-black shrink-0" />
                   ) : (
                     <Square className="w-5 h-5 text-neutral-400 shrink-0 group-hover:text-neutral-600" />
                   )}
@@ -154,10 +154,10 @@ export const DataExtractionPage: React.FC = () => {
 
       {/* EXTRACTION PROGRESS OVERLAY MODAL */}
       {isExtracting && (
-        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-neutral-900 max-w-md w-full p-8 rounded-[32px] border border-neutral-200 dark:border-neutral-800 space-y-6 text-center shadow-2xl">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-[#121212] max-w-md w-full p-8 rounded-[32px] border border-neutral-200 dark:border-neutral-800 space-y-6 text-center shadow-2xl">
             
-            <div className="w-20 h-20 mx-auto rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center relative">
+            <div className="w-20 h-20 mx-auto rounded-full bg-neutral-100 dark:bg-[#18181b] flex items-center justify-center relative">
               <span className="absolute inset-0 rounded-full border-2 border-neutral-900 dark:border-white border-t-transparent animate-spin" />
               <Activity className="w-8 h-8 text-neutral-900 dark:text-white" />
             </div>
@@ -185,7 +185,7 @@ export const DataExtractionPage: React.FC = () => {
               </div>
             </div>
 
-            <p className="text-xs text-neutral-600 dark:text-neutral-300 font-mono bg-neutral-50 dark:bg-neutral-800/80 p-3 rounded-xl border border-neutral-200/60 dark:border-neutral-700">
+            <p className="text-xs text-neutral-600 dark:text-neutral-300 font-mono bg-neutral-50 dark:bg-[#18181b] p-3 rounded-xl border border-neutral-200/60 dark:border-neutral-700">
               {extractionLogMessage}
             </p>
           </div>
@@ -217,25 +217,25 @@ export const DataExtractionPage: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
-            <div className="p-4 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200/60 dark:border-neutral-800">
+            <div className="p-4 rounded-2xl bg-white dark:bg-[#18181b] border border-neutral-200/60 dark:border-neutral-800">
               <p className="text-neutral-500 dark:text-neutral-400">Source Platform</p>
               <p className="text-base font-bold text-neutral-950 dark:text-white font-heading mt-0.5">
                 {lastExtractionResult.source}
               </p>
             </div>
-            <div className="p-4 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200/60 dark:border-neutral-800">
+            <div className="p-4 rounded-2xl bg-white dark:bg-[#18181b] border border-neutral-200/60 dark:border-neutral-800">
               <p className="text-neutral-500 dark:text-neutral-400">Extracted Records</p>
               <p className="text-base font-bold text-emerald-600 dark:text-emerald-400 font-heading mt-0.5">
                 {lastExtractionResult.recordsExtracted.toLocaleString()}
               </p>
             </div>
-            <div className="p-4 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200/60 dark:border-neutral-800">
+            <div className="p-4 rounded-2xl bg-white dark:bg-[#18181b] border border-neutral-200/60 dark:border-neutral-800">
               <p className="text-neutral-500 dark:text-neutral-400">Entities</p>
               <p className="text-xs font-semibold text-neutral-800 dark:text-neutral-200 truncate mt-0.5">
                 {lastExtractionResult.dataTypes.join(', ')}
               </p>
             </div>
-            <div className="p-4 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200/60 dark:border-neutral-800">
+            <div className="p-4 rounded-2xl bg-white dark:bg-[#18181b] border border-neutral-200/60 dark:border-neutral-800">
               <p className="text-neutral-500 dark:text-neutral-400">Duration</p>
               <p className="text-base font-bold text-neutral-950 dark:text-white font-heading mt-0.5">
                 {lastExtractionResult.extractionTime}

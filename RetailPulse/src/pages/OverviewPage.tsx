@@ -34,20 +34,20 @@ export const OverviewPage: React.FC = () => {
         
         {/* Floating Centered Avatar Badge with Pulse Ring */}
         <div className="relative mb-6 group cursor-pointer" onClick={() => sendTestEvent()}>
-          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-tr from-neutral-900 to-neutral-700 dark:from-neutral-200 dark:to-neutral-500 p-1 shadow-lg shadow-neutral-900/10 transition-transform duration-300 group-hover:scale-105">
-            <div className="w-full h-full rounded-full bg-white dark:bg-neutral-900 flex items-center justify-center overflow-hidden">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-tr from-neutral-900 to-neutral-700 dark:from-neutral-700 dark:to-neutral-500 p-1 shadow-lg shadow-neutral-900/10 transition-transform duration-300 group-hover:scale-105">
+            <div className="w-full h-full rounded-full bg-white dark:bg-black flex items-center justify-center overflow-hidden">
               <span className="font-extrabold text-lg sm:text-xl text-neutral-900 dark:text-white font-heading">
                 RP
               </span>
             </div>
           </div>
           {/* Live Pulse Ring */}
-          <span className="absolute bottom-0 right-0 w-5 h-5 rounded-full bg-emerald-500 border-2 border-white dark:border-neutral-900 flex items-center justify-center shadow-xs">
+          <span className="absolute bottom-0 right-0 w-5 h-5 rounded-full bg-emerald-500 border-2 border-white dark:border-black flex items-center justify-center shadow-xs">
             <span className="w-2 h-2 rounded-full bg-white animate-ping" />
           </span>
         </div>
 
-        {/* Hero Title with Mixed Typography (Calm your mind with Mindora style) */}
+        {/* Hero Title with Mixed Typography */}
         <div className="max-w-3xl mx-auto space-y-2">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-neutral-950 dark:text-white tracking-tight leading-[1.1] font-heading">
             <span className="font-extrabold">Pulse</span> your commerce <br className="hidden sm:inline" />
@@ -76,7 +76,7 @@ export const OverviewPage: React.FC = () => {
           </p>
         </div>
 
-        {/* Dark Pill CTA Button (Mindora 'Download Now ⤓' style) */}
+        {/* Dark / Light Pill CTA Buttons */}
         <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
           <button
             onClick={() => setActiveTab('extraction')}
@@ -95,11 +95,11 @@ export const OverviewPage: React.FC = () => {
           </button>
         </div>
 
-        {/* 2. THE THREE FEATURE/STAT SUB-CARDS (Directly modeled on the reference image) */}
+        {/* 2. THE THREE FEATURE/STAT SUB-CARDS */}
         <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 mt-12 text-left">
           
           {/* Sub-Card 1: Evidence-based tools / Canonical Ingestion */}
-          <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/60 dark:border-neutral-800 flex flex-col justify-between hover:border-neutral-300 transition-all">
+          <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-[#121212] border border-neutral-200/60 dark:border-neutral-800 flex flex-col justify-between hover:border-neutral-300 dark:hover:border-neutral-700 transition-all">
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-xs font-bold text-neutral-900 dark:text-white font-heading">
@@ -109,13 +109,13 @@ export const OverviewPage: React.FC = () => {
                   Automated schema normalization
                 </p>
               </div>
-              <span className="w-5 h-5 rounded-full bg-neutral-200 dark:bg-neutral-800 flex items-center justify-center text-[10px] text-neutral-600 dark:text-neutral-400 font-bold">
+              <span className="w-5 h-5 rounded-full bg-neutral-200 dark:bg-[#1f1f23] flex items-center justify-center text-[10px] text-neutral-600 dark:text-neutral-300 font-bold">
                 i
               </span>
             </div>
 
             <div className="mt-8 flex items-center gap-3">
-              <div className="w-9 h-9 rounded-full bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 flex items-center justify-center text-neutral-700 dark:text-neutral-300 shrink-0">
+              <div className="w-9 h-9 rounded-full bg-white dark:bg-[#18181b] border border-neutral-200 dark:border-neutral-700 flex items-center justify-center text-neutral-700 dark:text-neutral-300 shrink-0">
                 <Layers className="w-4 h-4" />
               </div>
               <p className="text-xs text-neutral-600 dark:text-neutral-400 leading-snug">
@@ -125,7 +125,7 @@ export const OverviewPage: React.FC = () => {
           </div>
 
           {/* Sub-Card 2: Powered by Community / Live Telemetry Numbers */}
-          <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/60 dark:border-neutral-800 flex flex-col justify-between hover:border-neutral-300 transition-all">
+          <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-[#121212] border border-neutral-200/60 dark:border-neutral-800 flex flex-col justify-between hover:border-neutral-300 dark:hover:border-neutral-700 transition-all">
             <div>
               <p className="text-xs font-bold text-neutral-900 dark:text-white font-heading">
                 Storefront Ingestion Volume
@@ -156,7 +156,7 @@ export const OverviewPage: React.FC = () => {
           </div>
 
           {/* Sub-Card 3: Teaser / Live Stream Radar with Preview Play Overlay */}
-          <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/60 dark:border-neutral-800 flex flex-col justify-between hover:border-neutral-300 transition-all">
+          <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-[#121212] border border-neutral-200/60 dark:border-neutral-800 flex flex-col justify-between hover:border-neutral-300 dark:hover:border-neutral-700 transition-all">
             <div className="flex items-start justify-between">
               <div>
                 <p className="text-xs font-bold text-neutral-900 dark:text-white font-heading">
@@ -181,11 +181,11 @@ export const OverviewPage: React.FC = () => {
                 </p>
               </div>
 
-              {/* Mindora Teaser Play Pill/Square */}
+              {/* Mindora Teaser Play Button */}
               <button
                 onClick={() => sendTestEvent()}
                 title="Send simulated live event"
-                className="w-12 h-12 rounded-2xl bg-neutral-900 dark:bg-white text-white dark:text-neutral-950 flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-sm"
+                className="w-12 h-12 rounded-2xl bg-neutral-900 dark:bg-white text-white dark:text-black flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-sm cursor-pointer"
               >
                 <Play className="w-4 h-4 fill-current ml-0.5" />
               </button>
@@ -217,7 +217,7 @@ export const OverviewPage: React.FC = () => {
 
           <button
             onClick={() => setActiveTab('sources')}
-            className="text-xs text-neutral-900 dark:text-neutral-200 hover:underline font-semibold flex items-center gap-1"
+            className="text-xs text-neutral-900 dark:text-neutral-200 hover:underline font-semibold flex items-center gap-1 cursor-pointer"
           >
             All Source Details <ArrowRight className="w-3.5 h-3.5" />
           </button>
@@ -233,15 +233,15 @@ export const OverviewPage: React.FC = () => {
             }}
             className={`p-6 rounded-[28px] cursor-pointer relative overflow-hidden transition-all border ${
               selectedSource === 'ShopPulse'
-                ? 'bg-neutral-950 text-white dark:bg-white dark:text-neutral-950 shadow-xl'
-                : 'bg-neutral-50 dark:bg-neutral-900/60 border-neutral-200/80 dark:border-neutral-800 hover:border-neutral-400'
+                ? 'bg-neutral-950 text-white dark:bg-[#18181b] dark:text-white dark:border-white/50 shadow-xl'
+                : 'bg-neutral-50 dark:bg-[#121212] border-neutral-200/80 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-700'
             }`}
           >
             <div className="flex items-start justify-between mb-4">
               <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${
                 selectedSource === 'ShopPulse'
-                  ? 'bg-white/10 dark:bg-neutral-100 text-white dark:text-neutral-900'
-                  : 'bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white shadow-xs'
+                  ? 'bg-white/10 dark:bg-white text-white dark:text-black'
+                  : 'bg-white dark:bg-[#18181b] text-neutral-900 dark:text-white shadow-xs'
               }`}>
                 <ShoppingBag className="w-6 h-6" />
               </div>
@@ -251,20 +251,20 @@ export const OverviewPage: React.FC = () => {
             </div>
 
             <h3 className="text-xl font-bold font-heading">ShopPulse</h3>
-            <p className={`text-xs mb-4 ${selectedSource === 'ShopPulse' ? 'text-neutral-300 dark:text-neutral-600' : 'text-neutral-500 dark:text-neutral-400'}`}>
+            <p className={`text-xs mb-4 ${selectedSource === 'ShopPulse' ? 'text-neutral-300 dark:text-neutral-400' : 'text-neutral-500 dark:text-neutral-400'}`}>
               Lifestyle & Apparel Storefront
             </p>
             
             <div className="text-xs space-y-1 mb-6">
               <p className="font-semibold">Schemas:</p>
-              <p className={selectedSource === 'ShopPulse' ? 'text-neutral-300 dark:text-neutral-600' : 'text-neutral-500 dark:text-neutral-400'}>
+              <p className={selectedSource === 'ShopPulse' ? 'text-neutral-300 dark:text-neutral-400' : 'text-neutral-500 dark:text-neutral-400'}>
                 Customers, Products, Orders, Cart Telemetry, Reviews
               </p>
             </div>
 
-            <button className={`w-full py-2.5 rounded-full font-bold text-xs transition-all ${
+            <button className={`w-full py-2.5 rounded-full font-bold text-xs transition-all cursor-pointer ${
               selectedSource === 'ShopPulse'
-                ? 'bg-white text-neutral-950 dark:bg-neutral-950 dark:text-white'
+                ? 'bg-white text-neutral-950 dark:bg-white dark:text-black'
                 : 'pill-btn-dark'
             }`}>
               Select ShopPulse
@@ -279,15 +279,15 @@ export const OverviewPage: React.FC = () => {
             }}
             className={`p-6 rounded-[28px] cursor-pointer relative overflow-hidden transition-all border ${
               selectedSource === 'TechMart'
-                ? 'bg-neutral-950 text-white dark:bg-white dark:text-neutral-950 shadow-xl'
-                : 'bg-neutral-50 dark:bg-neutral-900/60 border-neutral-200/80 dark:border-neutral-800 hover:border-neutral-400'
+                ? 'bg-neutral-950 text-white dark:bg-[#18181b] dark:text-white dark:border-white/50 shadow-xl'
+                : 'bg-neutral-50 dark:bg-[#121212] border-neutral-200/80 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-700'
             }`}
           >
             <div className="flex items-start justify-between mb-4">
               <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${
                 selectedSource === 'TechMart'
-                  ? 'bg-white/10 dark:bg-neutral-100 text-white dark:text-neutral-900'
-                  : 'bg-white dark:bg-neutral-800 text-neutral-900 dark:text-white shadow-xs'
+                  ? 'bg-white/10 dark:bg-white text-white dark:text-black'
+                  : 'bg-white dark:bg-[#18181b] text-neutral-900 dark:text-white shadow-xs'
               }`}>
                 <Cpu className="w-6 h-6" />
               </div>
@@ -297,20 +297,20 @@ export const OverviewPage: React.FC = () => {
             </div>
 
             <h3 className="text-xl font-bold font-heading">TechMart</h3>
-            <p className={`text-xs mb-4 ${selectedSource === 'TechMart' ? 'text-neutral-300 dark:text-neutral-600' : 'text-neutral-500 dark:text-neutral-400'}`}>
+            <p className={`text-xs mb-4 ${selectedSource === 'TechMart' ? 'text-neutral-300 dark:text-neutral-400' : 'text-neutral-500 dark:text-neutral-400'}`}>
               Consumer Tech & Electronics Storefront
             </p>
             
             <div className="text-xs space-y-1 mb-6">
               <p className="font-semibold">Schemas:</p>
-              <p className={selectedSource === 'TechMart' ? 'text-neutral-300 dark:text-neutral-600' : 'text-neutral-500 dark:text-neutral-400'}>
+              <p className={selectedSource === 'TechMart' ? 'text-neutral-300 dark:text-neutral-400' : 'text-neutral-500 dark:text-neutral-400'}>
                 Users, Products, Transactions, Inventory, Behavioral Logs
               </p>
             </div>
 
-            <button className={`w-full py-2.5 rounded-full font-bold text-xs transition-all ${
+            <button className={`w-full py-2.5 rounded-full font-bold text-xs transition-all cursor-pointer ${
               selectedSource === 'TechMart'
-                ? 'bg-white text-neutral-950 dark:bg-neutral-950 dark:text-white'
+                ? 'bg-white text-neutral-950 dark:bg-white dark:text-black'
                 : 'pill-btn-dark'
             }`}>
               Select TechMart
@@ -324,7 +324,7 @@ export const OverviewPage: React.FC = () => {
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* RECENT EXTRACTION */}
-        <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-4">
+        <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-[#121212] border border-neutral-200/80 dark:border-neutral-800 space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-neutral-200/60 dark:border-neutral-800">
             <h3 className="text-base font-bold text-neutral-950 dark:text-white font-heading flex items-center gap-2">
               <Download className="w-4 h-4 text-neutral-900 dark:text-white" />
@@ -338,25 +338,25 @@ export const OverviewPage: React.FC = () => {
           {lastExtractionResult ? (
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-3 text-xs">
-                <div className="p-3.5 rounded-2xl bg-white dark:bg-neutral-800/80 border border-neutral-200/60 dark:border-neutral-700">
+                <div className="p-3.5 rounded-2xl bg-white dark:bg-[#18181b] border border-neutral-200/60 dark:border-neutral-700">
                   <p className="text-neutral-500 dark:text-neutral-400">Active Source</p>
                   <p className="text-sm font-bold text-neutral-950 dark:text-white font-heading mt-0.5">
                     {lastExtractionResult.source}
                   </p>
                 </div>
-                <div className="p-3.5 rounded-2xl bg-white dark:bg-neutral-800/80 border border-neutral-200/60 dark:border-neutral-700">
+                <div className="p-3.5 rounded-2xl bg-white dark:bg-[#18181b] border border-neutral-200/60 dark:border-neutral-700">
                   <p className="text-neutral-500 dark:text-neutral-400">Records Extracted</p>
                   <p className="text-sm font-bold text-neutral-950 dark:text-white font-heading mt-0.5">
                     {lastExtractionResult.recordsExtracted.toLocaleString()}
                   </p>
                 </div>
-                <div className="p-3.5 rounded-2xl bg-white dark:bg-neutral-800/80 border border-neutral-200/60 dark:border-neutral-700">
+                <div className="p-3.5 rounded-2xl bg-white dark:bg-[#18181b] border border-neutral-200/60 dark:border-neutral-700">
                   <p className="text-neutral-500 dark:text-neutral-400">Extraction Duration</p>
                   <p className="text-sm font-semibold text-neutral-800 dark:text-neutral-200 mt-0.5">
                     {lastExtractionResult.extractionTime}
                   </p>
                 </div>
-                <div className="p-3.5 rounded-2xl bg-white dark:bg-neutral-800/80 border border-neutral-200/60 dark:border-neutral-700">
+                <div className="p-3.5 rounded-2xl bg-white dark:bg-[#18181b] border border-neutral-200/60 dark:border-neutral-700">
                   <p className="text-neutral-500 dark:text-neutral-400">Timestamp</p>
                   <p className="text-sm font-semibold text-neutral-800 dark:text-neutral-200 mt-0.5">
                     {lastExtractionResult.timestamp}
@@ -366,7 +366,7 @@ export const OverviewPage: React.FC = () => {
 
               <button
                 onClick={() => setActiveTab('extracted-data')}
-                className="w-full py-2.5 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-neutral-950 font-bold text-xs hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-2.5 rounded-full bg-neutral-900 dark:bg-white text-white dark:text-black font-bold text-xs hover:bg-neutral-800 dark:hover:bg-neutral-200 transition-colors flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Table className="w-4 h-4" />
                 View Extracted Data Table
@@ -378,7 +378,7 @@ export const OverviewPage: React.FC = () => {
         </div>
 
         {/* LATEST INSIGHTS */}
-        <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-4">
+        <div className="p-6 rounded-[28px] bg-neutral-50 dark:bg-[#121212] border border-neutral-200/80 dark:border-neutral-800 space-y-4">
           <div className="flex items-center justify-between pb-3 border-b border-neutral-200/60 dark:border-neutral-800">
             <h3 className="text-base font-bold text-neutral-950 dark:text-white font-heading flex items-center gap-2">
               <LineChart className="w-4 h-4 text-neutral-900 dark:text-white" />
@@ -386,26 +386,26 @@ export const OverviewPage: React.FC = () => {
             </h3>
             <button
               onClick={() => setActiveTab('insights')}
-              className="text-xs text-neutral-900 dark:text-neutral-200 hover:underline font-semibold"
+              className="text-xs text-neutral-900 dark:text-neutral-200 hover:underline font-semibold cursor-pointer"
             >
               Full Analytics →
             </button>
           </div>
 
           <div className="grid grid-cols-3 gap-3 text-xs">
-            <div className="p-3.5 rounded-2xl bg-white dark:bg-neutral-800/80 border border-neutral-200/60 dark:border-neutral-700">
+            <div className="p-3.5 rounded-2xl bg-white dark:bg-[#18181b] border border-neutral-200/60 dark:border-neutral-700">
               <p className="text-neutral-500 dark:text-neutral-400">Total Revenue</p>
               <p className="text-sm font-bold text-emerald-600 dark:text-emerald-400 font-heading mt-0.5">
                 {currentInsights.totalRevenue}
               </p>
             </div>
-            <div className="p-3.5 rounded-2xl bg-white dark:bg-neutral-800/80 border border-neutral-200/60 dark:border-neutral-700">
+            <div className="p-3.5 rounded-2xl bg-white dark:bg-[#18181b] border border-neutral-200/60 dark:border-neutral-700">
               <p className="text-neutral-500 dark:text-neutral-400">Orders / Tx</p>
               <p className="text-sm font-bold text-neutral-950 dark:text-white font-heading mt-0.5">
                 {currentInsights.totalOrdersOrTx}
               </p>
             </div>
-            <div className="p-3.5 rounded-2xl bg-white dark:bg-neutral-800/80 border border-neutral-200/60 dark:border-neutral-700">
+            <div className="p-3.5 rounded-2xl bg-white dark:bg-[#18181b] border border-neutral-200/60 dark:border-neutral-700">
               <p className="text-neutral-500 dark:text-neutral-400">Top Product</p>
               <p className="text-xs font-bold text-neutral-950 dark:text-white truncate mt-0.5">
                 {currentInsights.topProduct}
