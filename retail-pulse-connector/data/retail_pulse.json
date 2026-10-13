@@ -1,6 +1,34 @@
 {
   "events": [
     {
+      "event_id": "EVT-100023",
+      "source": "ShopPulse",
+      "source_type": "ecommerce",
+      "event_type": "PRODUCT_VIEW",
+      "session_id": "SP-TEST-SESSION-487",
+      "user_id": "TEST_USER_01",
+      "canonical_user_id": "SP-USER-TEST_USER_01",
+      "product_id": "P001",
+      "canonical_product_id": "SP-PROD-P001",
+      "product_name": "Wireless Headphones",
+      "category": "Electronics",
+      "order_id": null,
+      "canonical_transaction_id": null,
+      "search_query": null,
+      "results_count": null,
+      "view_duration_seconds": 28,
+      "quantity": null,
+      "unit_price": null,
+      "total_amount": null,
+      "cart_value": null,
+      "item_count": null,
+      "rating": null,
+      "payment_method": null,
+      "timestamp": "2026-10-13T17:05:23.204Z",
+      "payload": "{\"source\":\"ShopPulse\",\"event_type\":\"PRODUCT_VIEW\",\"session_id\":\"SP-TEST-SESSION-487\",\"user_id\":\"TEST_USER_01\",\"product_id\":\"P001\",\"product_name\":\"Wireless Headphones\",\"category\":\"Electronics\",\"view_duration_seconds\":28,\"timestamp\":\"2026-10-13T17:05:23.204Z\"}",
+      "created_at": "2026-10-13T17:05:23.204Z"
+    },
+    {
       "event_id": "EVT-100022",
       "source": "ShopPulse",
       "source_type": "ecommerce",
@@ -2443,8 +2471,8 @@
       "source_name": "ShopPulse General E-Commerce",
       "source_type": "ecommerce",
       "status": "Connected",
-      "last_seen": "2026-10-13T16:43:16.992Z",
-      "event_count": 55
+      "last_seen": "2026-10-13T17:05:23.204Z",
+      "event_count": 56
     },
     {
       "source_id": "TechMart",
@@ -2629,6 +2657,13 @@
       "user_id": "TM_TEST_USER_01",
       "started_at": "2026-10-13T16:42:02.816Z",
       "last_activity": "2026-10-13T16:42:02.816Z"
+    },
+    {
+      "session_id": "SP-TEST-SESSION-487",
+      "source": "ShopPulse",
+      "user_id": "TEST_USER_01",
+      "started_at": "2026-10-13T17:05:23.204Z",
+      "last_activity": "2026-10-13T17:05:23.204Z"
     }
   ]
 }

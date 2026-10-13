@@ -57,6 +57,11 @@ interface DashboardContextType {
   setSearchQuery: (q: string) => void;
   selectedStatusFilter: string;
   setSelectedStatusFilter: (status: string) => void;
+
+  // Theme support (light = Mindora aesthetic, dark = Cyber dashboard)
+  theme: 'light' | 'dark';
+  setTheme: (t: 'light' | 'dark') => void;
+  toggleTheme: () => void;
 }
 
 const DashboardContext = createContext<DashboardContextType | undefined>(undefined);
@@ -99,6 +104,37 @@ export const DashboardProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedStatusFilter, setSelectedStatusFilter] = useState<string>('All');
+
+  // Theme state: default to 'light' (Mindora aesthetic) with localStorage persistence
+  const [theme, setThemeState] = useState<'light' | 'dark'>(() => {
+    try {
+      const saved = localStorage.getItem('retailpulse_theme');
+      return (saved === 'dark' || saved === 'light') ? saved : 'light';
+    } catch {
+      return 'light';
+    }
+  });
+
+  const setTheme = (newTheme: 'light' | 'dark') => {
+    setThemeState(newTheme);
+    try {
+      localStorage.setItem('retailpulse_theme', newTheme);
+    } catch {
+      // ignore
+    }
+  };
+
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
+  };
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
 
   // Fetch Live Data from Connector Server
   const fetchLiveData = async () => {
@@ -263,7 +299,10 @@ export const DashboardProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         searchQuery,
         setSearchQuery,
         selectedStatusFilter,
-        setSelectedStatusFilter
+        setSelectedStatusFilter,
+        theme,
+        setTheme,
+        toggleTheme
       }}
     >
       {children}

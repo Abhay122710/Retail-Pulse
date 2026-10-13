@@ -12,7 +12,7 @@ import {
   Table, 
   LineChart, 
   Activity, 
-  Zap 
+  Zap
 } from 'lucide-react';
 import { extractionService } from '../services/extractionService';
 
@@ -43,48 +43,50 @@ export const DataExtractionPage: React.FC = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black text-white font-urbanist tracking-tight">
-            Data Extraction
+          <h1 className="text-2xl sm:text-3xl font-black text-neutral-950 dark:text-white font-heading tracking-tight">
+            Data Extraction Engine
           </h1>
-          <p className="text-slate-400 text-xs mt-1">
-            Extract structured data from the selected e-commerce source.
+          <p className="text-neutral-500 dark:text-neutral-400 text-xs sm:text-sm mt-1">
+            Extract structured schemas and normalize clickstream events from {selectedSource}.
           </p>
         </div>
 
         {/* Selected Source Header Badge */}
-        <div className="flex items-center gap-3 px-4 py-2 rounded-2xl glass-panel border border-[#A068FF]/30 text-xs">
-          <span className="text-slate-400 font-semibold">SOURCE</span>
-          <span className="font-bold text-white font-urbanist text-sm">{selectedSource}</span>
-          <span className="flex items-center gap-1 text-emerald-400 font-mono font-bold text-[11px] pl-2 border-l border-slate-700">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" /> Connected
+        <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-xs self-start sm:self-auto">
+          <span className="text-neutral-400 font-semibold">SOURCE</span>
+          <span className="font-bold text-neutral-950 dark:text-white font-heading">{selectedSource}</span>
+          <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 font-bold text-[11px] pl-2 border-l border-neutral-200 dark:border-neutral-700">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> Live Link
           </span>
         </div>
       </div>
 
       {/* MAIN EXTRACTION CARD */}
-      <div className="glass-card p-8 rounded-3xl border border-[#A068FF]/30 space-y-8">
+      <div className="p-6 sm:p-8 rounded-[28px] bg-neutral-50 dark:bg-neutral-900/60 border border-neutral-200/80 dark:border-neutral-800 space-y-8">
         
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#A068FF]/20">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-neutral-200/60 dark:border-neutral-800">
           <div>
-            <h2 className="text-xl font-bold text-white font-urbanist flex items-center gap-2">
-              <Download className="w-5 h-5 text-[#A068FF]" />
-              DATA TO EXTRACT
+            <h2 className="text-lg font-bold text-neutral-950 dark:text-white font-heading flex items-center gap-2">
+              <Download className="w-5 h-5 text-neutral-900 dark:text-white" />
+              Select Schema Objects
             </h2>
-            <p className="text-xs text-slate-400">Select schema objects to include in extraction package</p>
+            <p className="text-xs text-neutral-500 dark:text-neutral-400">
+              Pick which dataset entities to include in the extraction bundle
+            </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <button
               onClick={selectAllDataTypes}
-              className="px-3.5 py-1.5 rounded-xl bg-[#070319] border border-[#A068FF]/30 text-xs font-semibold text-slate-200 hover:text-white hover:border-[#A068FF] transition-all flex items-center gap-1.5"
+              className="pill-btn-subtle px-3.5 py-1.5 text-xs font-semibold flex items-center gap-1.5 cursor-pointer"
             >
-              <CheckSquare className="w-3.5 h-3.5 text-[#A068FF]" /> Select All
+              <CheckSquare className="w-3.5 h-3.5" /> Select All
             </button>
             <button
               onClick={clearAllDataTypes}
-              className="px-3.5 py-1.5 rounded-xl bg-[#070319] border border-[#A068FF]/30 text-xs font-semibold text-slate-400 hover:text-rose-400 transition-all flex items-center gap-1.5"
+              className="pill-btn-subtle px-3.5 py-1.5 text-xs font-semibold text-neutral-500 hover:text-rose-600 flex items-center gap-1.5 cursor-pointer"
             >
-              <RotateCcw className="w-3.5 h-3.5" /> Clear All
+              <RotateCcw className="w-3.5 h-3.5" /> Reset
             </button>
           </div>
         </div>
@@ -100,47 +102,49 @@ export const DataExtractionPage: React.FC = () => {
                 onClick={() => toggleDataType(type)}
                 className={`p-4 rounded-2xl cursor-pointer border transition-all flex items-center justify-between group ${
                   isChecked
-                    ? 'bg-gradient-to-r from-[#A068FF]/20 to-[#7C3AED]/10 border-[#A068FF] text-white shadow-md shadow-[#A068FF]/15'
-                    : 'bg-[#070319]/80 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+                    ? 'bg-neutral-950 text-white dark:bg-white dark:text-neutral-950 border-neutral-950 dark:border-white shadow-md'
+                    : 'bg-white dark:bg-neutral-800/80 border-neutral-200/80 dark:border-neutral-700 text-neutral-700 dark:text-neutral-300 hover:border-neutral-400'
                 }`}
               >
                 <div className="flex items-center gap-3">
                   {isChecked ? (
-                    <CheckSquare className="w-5 h-5 text-[#A068FF] shrink-0" />
+                    <CheckSquare className="w-5 h-5 text-white dark:text-neutral-950 shrink-0" />
                   ) : (
-                    <Square className="w-5 h-5 text-slate-600 shrink-0 group-hover:text-slate-400" />
+                    <Square className="w-5 h-5 text-neutral-400 shrink-0 group-hover:text-neutral-600" />
                   )}
-                  <span className="text-sm font-semibold font-urbanist">{type}</span>
+                  <span className="text-xs sm:text-sm font-semibold font-heading">{type}</span>
                 </div>
 
-                <span className="text-[10px] font-mono text-slate-500">Schema Node</span>
+                <span className={`text-[10px] font-mono ${isChecked ? 'text-neutral-300 dark:text-neutral-600' : 'text-neutral-400'}`}>
+                  Entity
+                </span>
               </div>
             );
           })}
         </div>
 
         {/* Action Button */}
-        <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-[#A068FF]/20">
-          <p className="text-xs text-slate-400">
-            {selectedDataTypes.length} of {availableTypes.length} data streams selected
+        <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-neutral-200/60 dark:border-neutral-800">
+          <p className="text-xs text-neutral-500 dark:text-neutral-400">
+            {selectedDataTypes.length} of {availableTypes.length} entities selected
           </p>
 
           <button
             onClick={startExtraction}
             disabled={selectedDataTypes.length === 0 || isExtracting}
-            className={`w-full sm:w-auto px-8 py-3.5 rounded-2xl font-bold text-sm shadow-xl transition-all flex items-center justify-center gap-2 ${
+            className={`w-full sm:w-auto px-8 py-3.5 rounded-full font-bold text-xs sm:text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer ${
               selectedDataTypes.length === 0 || isExtracting
-                ? 'bg-slate-800 text-slate-500 cursor-not-allowed border border-slate-700'
-                : 'bg-gradient-to-r from-[#A068FF] to-[#7C3AED] text-white shadow-[#A068FF]/40 hover:scale-105 active:scale-95'
+                ? 'bg-neutral-200 dark:bg-neutral-800 text-neutral-400 cursor-not-allowed'
+                : 'pill-btn-dark hover:scale-105 active:scale-95'
             }`}
           >
             {isExtracting ? (
               <>
-                <Loader2 className="w-5 h-5 animate-spin" /> Extracting Data...
+                <Loader2 className="w-4 h-4 animate-spin" /> Ingestion Running...
               </>
             ) : (
               <>
-                <Zap className="w-5 h-5 fill-current" /> Extract Data
+                <Zap className="w-4 h-4 fill-current" /> Run Live Extraction
               </>
             )}
           </button>
@@ -148,40 +152,40 @@ export const DataExtractionPage: React.FC = () => {
 
       </div>
 
-      {/* EXTRACTION ANIMATION MODAL OVERLAY */}
+      {/* EXTRACTION PROGRESS OVERLAY MODAL */}
       {isExtracting && (
-        <div className="fixed inset-0 z-50 bg-[#060218]/90 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="glass-card max-w-md w-full p-8 rounded-3xl border border-[#A068FF] space-y-6 text-center shadow-2xl shadow-[#A068FF]/30">
+        <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-neutral-900 max-w-md w-full p-8 rounded-[32px] border border-neutral-200 dark:border-neutral-800 space-y-6 text-center shadow-2xl">
             
-            <div className="relative w-28 h-28 mx-auto flex items-center justify-center">
-              {/* Futuristic Spinning Rings */}
-              <div className="absolute inset-0 rounded-full border-2 border-t-[#A068FF] border-r-transparent border-b-[#00F0FF] border-l-transparent animate-spin-slow" />
-              <div className="absolute inset-2 rounded-full border-2 border-t-transparent border-r-[#A068FF] border-b-transparent border-l-[#10B981] animate-spin-reverse" />
-              <Activity className="w-10 h-10 text-[#A068FF] animate-pulse" />
+            <div className="w-20 h-20 mx-auto rounded-full bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center relative">
+              <span className="absolute inset-0 rounded-full border-2 border-neutral-900 dark:border-white border-t-transparent animate-spin" />
+              <Activity className="w-8 h-8 text-neutral-900 dark:text-white" />
             </div>
 
             <div>
-              <h3 className="text-2xl font-black text-white font-urbanist">EXTRACTION IN PROGRESS</h3>
-              <p className="text-xs font-mono text-[#A068FF] mt-1 uppercase tracking-wider">
+              <h3 className="text-xl font-bold text-neutral-950 dark:text-white font-heading">
+                Extracting Canonical Data
+              </h3>
+              <p className="text-xs font-semibold text-neutral-500 dark:text-neutral-400 mt-1 uppercase tracking-wider">
                 {extractionStep}
               </p>
             </div>
 
             {/* Progress Bar & Percentage */}
             <div className="space-y-2">
-              <div className="w-full bg-[#070319] h-3 rounded-full overflow-hidden border border-[#A068FF]/30 p-0.5">
+              <div className="w-full bg-neutral-100 dark:bg-neutral-800 h-2.5 rounded-full overflow-hidden p-0.5">
                 <div 
-                  className="h-full bg-gradient-to-r from-[#A068FF] via-[#00F0FF] to-[#10B981] rounded-full transition-all duration-300"
+                  className="h-full bg-neutral-950 dark:bg-white rounded-full transition-all duration-300"
                   style={{ width: `${extractionProgress}%` }}
                 />
               </div>
-              <div className="flex justify-between text-xs font-mono">
-                <span className="text-slate-400">Progress</span>
-                <span className="text-emerald-400 font-bold">{extractionProgress}%</span>
+              <div className="flex justify-between text-xs font-medium text-neutral-500">
+                <span>Progress</span>
+                <span className="font-bold text-neutral-900 dark:text-white">{extractionProgress}%</span>
               </div>
             </div>
 
-            <p className="text-xs text-slate-300 font-mono bg-[#070319] p-3 rounded-xl border border-[#A068FF]/20">
+            <p className="text-xs text-neutral-600 dark:text-neutral-300 font-mono bg-neutral-50 dark:bg-neutral-800/80 p-3 rounded-xl border border-neutral-200/60 dark:border-neutral-700">
               {extractionLogMessage}
             </p>
           </div>
@@ -190,60 +194,68 @@ export const DataExtractionPage: React.FC = () => {
 
       {/* EXTRACTION RESULT CONTAINER */}
       {lastExtractionResult && !isExtracting && (
-        <div className="glass-card p-8 rounded-3xl border border-emerald-500/40 bg-emerald-500/5 space-y-6 animate-fadeIn">
+        <div className="p-6 sm:p-8 rounded-[28px] bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-500/30 space-y-6 animate-fadeIn">
           
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-emerald-500/20">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400">
-                <CheckCircle2 className="w-6 h-6" />
+              <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center">
+                <CheckCircle2 className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-2xl font-black text-white font-urbanist">Extraction Complete</h3>
-                <p className="text-xs text-slate-400">Data package ready for downstream analytics</p>
+                <h3 className="text-xl font-bold text-neutral-950 dark:text-white font-heading">
+                  Extraction Successful
+                </h3>
+                <p className="text-xs text-neutral-600 dark:text-neutral-400">
+                  Data package synchronized and cached for BI reporting
+                </p>
               </div>
             </div>
 
-            <span className="px-3.5 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 font-mono text-xs font-bold">
-              ✓ Successful
+            <span className="px-3.5 py-1 rounded-full bg-emerald-500 text-white font-semibold text-xs shadow-xs self-start sm:self-auto">
+              ✓ Ready for Analytics
             </span>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
-            <div className="p-4 rounded-2xl bg-[#070319] border border-[#A068FF]/20">
-              <p className="text-slate-400">Source Platform</p>
-              <p className="text-lg font-bold text-white font-urbanist">{lastExtractionResult.source}</p>
+            <div className="p-4 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200/60 dark:border-neutral-800">
+              <p className="text-neutral-500 dark:text-neutral-400">Source Platform</p>
+              <p className="text-base font-bold text-neutral-950 dark:text-white font-heading mt-0.5">
+                {lastExtractionResult.source}
+              </p>
             </div>
-            <div className="p-4 rounded-2xl bg-[#070319] border border-[#A068FF]/20">
-              <p className="text-slate-400">Records Extracted</p>
-              <p className="text-lg font-bold text-emerald-400 font-urbanist">
+            <div className="p-4 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200/60 dark:border-neutral-800">
+              <p className="text-neutral-500 dark:text-neutral-400">Extracted Records</p>
+              <p className="text-base font-bold text-emerald-600 dark:text-emerald-400 font-heading mt-0.5">
                 {lastExtractionResult.recordsExtracted.toLocaleString()}
               </p>
             </div>
-            <div className="p-4 rounded-2xl bg-[#070319] border border-[#A068FF]/20">
-              <p className="text-slate-400">Data Types</p>
-              <p className="text-xs font-semibold text-slate-200 truncate">
+            <div className="p-4 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200/60 dark:border-neutral-800">
+              <p className="text-neutral-500 dark:text-neutral-400">Entities</p>
+              <p className="text-xs font-semibold text-neutral-800 dark:text-neutral-200 truncate mt-0.5">
                 {lastExtractionResult.dataTypes.join(', ')}
               </p>
             </div>
-            <div className="p-4 rounded-2xl bg-[#070319] border border-[#A068FF]/20">
-              <p className="text-slate-400">Extraction Time</p>
-              <p className="text-lg font-bold text-[#A068FF] font-urbanist">{lastExtractionResult.extractionTime}</p>
+            <div className="p-4 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200/60 dark:border-neutral-800">
+              <p className="text-neutral-500 dark:text-neutral-400">Duration</p>
+              <p className="text-base font-bold text-neutral-950 dark:text-white font-heading mt-0.5">
+                {lastExtractionResult.extractionTime}
+              </p>
             </div>
           </div>
 
           {/* Result Action Buttons */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 pt-2">
+          <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
             <button
               onClick={() => setActiveTab('extracted-data')}
-              className="w-full sm:w-1/2 py-3 rounded-2xl bg-[#070319] border border-[#A068FF]/40 text-[#A068FF] font-bold text-xs hover:bg-[#A068FF]/20 transition-all flex items-center justify-center gap-2"
+              className="w-full sm:w-1/2 py-3 rounded-full pill-btn-subtle font-bold text-xs flex items-center justify-center gap-2 cursor-pointer"
             >
-              <Table className="w-4 h-4" /> View Extracted Data
+              <Table className="w-4 h-4" /> View Extracted Records Table
             </button>
             <button
               onClick={() => setActiveTab('insights')}
-              className="w-full sm:w-1/2 py-3 rounded-2xl bg-gradient-to-r from-[#A068FF] to-[#7C3AED] text-white font-bold text-xs shadow-lg shadow-[#A068FF]/30 hover:scale-105 transition-all flex items-center justify-center gap-2"
+              className="w-full sm:w-1/2 py-3 rounded-full pill-btn-dark font-bold text-xs flex items-center justify-center gap-2 cursor-pointer shadow-md"
             >
-              <LineChart className="w-4 h-4" /> View Insights <ArrowRight className="w-4 h-4" />
+              <LineChart className="w-4 h-4" /> Explore Insights Engine <ArrowRight className="w-4 h-4" />
             </button>
           </div>
 

@@ -1,95 +1,172 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDashboard } from '../../context/DashboardContext';
+import type { DashboardTab } from '../../types';
 import { 
   Activity, 
   Search, 
-  Settings,
-  Database
+  Menu, 
+  X
 } from 'lucide-react';
 
+const NAV_TABS: Array<{ id: DashboardTab; label: string }> = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'sources', label: 'Data Sources' },
+  { id: 'extraction', label: 'Extraction' },
+  { id: 'extracted-data', label: 'Data Records' },
+  { id: 'insights', label: 'Insights' },
+  { id: 'settings', label: 'Settings' }
+];
+
 export const Header: React.FC = () => {
-  const { searchQuery, setSearchQuery, selectedSource, setActiveTab } = useDashboard();
+  const { 
+    activeTab, 
+    setActiveTab, 
+    selectedSource, 
+    selectSource,
+    searchQuery, 
+    setSearchQuery,
+    isConnectorConnected
+  } = useDashboard();
+
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 w-full glass-panel border-b border-[#A068FF]/30 bg-[#060218]/90 backdrop-blur-xl">
-      <div className="max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+    <header className="w-full pb-6 border-b border-neutral-100 dark:border-neutral-800/80 mb-6">
+      <div className="flex items-center justify-between gap-4">
         
-        {/* LEFT: Logo & Platform Badge */}
-        <div 
-          onClick={() => setActiveTab('overview')}
-          className="flex items-center gap-3 shrink-0 cursor-pointer group"
-        >
-          <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-[#A068FF] to-[#7C3AED] p-0.5 shadow-lg shadow-[#A068FF]/30 group-hover:scale-105 transition-transform">
-            <div className="w-full h-full bg-[#060218] rounded-[14px] flex items-center justify-center">
-              <Activity className="w-6 h-6 text-[#A068FF] animate-pulse" />
+        {/* LEFT: Logo & Mindora-style menu button */}
+        <div className="flex items-center gap-6">
+          <div 
+            onClick={() => setActiveTab('overview')}
+            className="flex items-center gap-2.5 cursor-pointer group select-none"
+          >
+            <div className="w-9 h-9 rounded-full bg-neutral-900 dark:bg-white flex items-center justify-center text-white dark:text-neutral-950 shadow-sm transition-transform group-hover:scale-105">
+              <Activity className="w-4 h-4" />
             </div>
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-black tracking-tight text-white font-urbanist">
-                Retail <span className="text-[#A068FF] purple-glow-text">Pulse</span>
-              </span>
-              <span className="px-2 py-0.5 rounded-full bg-[#A068FF]/20 text-[#A068FF] border border-[#A068FF]/40 text-[10px] font-bold tracking-wider uppercase">
-                Extraction & Insights
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-2xl font-extrabold tracking-tight text-neutral-950 dark:text-white font-heading">
+                Retail<span className="font-light text-neutral-500 dark:text-neutral-400">Pulse</span>
               </span>
             </div>
-            <p className="text-[10px] text-slate-400 font-medium tracking-wide">
-              Multi-Source E-Commerce Data Platform
-            </p>
           </div>
+
+          {/* Quick Menu Indicator */}
+          <button 
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-neutral-200 dark:border-neutral-800 text-xs font-semibold text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800/60 transition-all"
+          >
+            {mobileMenuOpen ? <X className="w-3.5 h-3.5" /> : <Menu className="w-3.5 h-3.5" />}
+            <span className="tracking-wide text-[11px] uppercase">menu</span>
+          </button>
         </div>
 
-        {/* CENTER: Global Search Bar */}
-        <div className="hidden md:flex flex-1 max-w-md items-center relative">
-          <div className="relative w-full">
-            <input
-              type="text"
-              placeholder="Search extracted orders, transactions, products..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-[#070319]/90 border border-[#A068FF]/30 rounded-full text-xs text-slate-100 placeholder-slate-400 focus:outline-none focus:border-[#A068FF] focus:ring-1 focus:ring-[#A068FF] transition-all"
-            />
-            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-2.5" />
-          </div>
-        </div>
+        {/* CENTER: Mindora-style Floating Tab Pills */}
+        <nav className="hidden lg:flex items-center gap-1.5 bg-neutral-100/80 dark:bg-neutral-900/80 p-1.5 rounded-full border border-neutral-200/60 dark:border-neutral-800">
+          {NAV_TABS.map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-4 py-2 rounded-full text-xs font-semibold transition-all duration-200 ${
+                  isActive
+                    ? 'bg-neutral-950 text-white dark:bg-white dark:text-neutral-950 shadow-sm'
+                    : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white hover:bg-white/60 dark:hover:bg-neutral-800/50'
+                }`}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
+        </nav>
 
-        {/* RIGHT: Status Indicator & Active Source */}
-        <div className="flex items-center gap-4">
+        {/* RIGHT: Source Selector & Live Status Pill */}
+        <div className="flex items-center gap-3">
           
-          {/* Active Data Source Pill */}
-          <button 
-            onClick={() => setActiveTab('sources')}
-            className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#070319] border border-[#A068FF]/40 text-xs text-slate-200 hover:border-[#A068FF] transition-all"
-          >
-            <Database className="w-3.5 h-3.5 text-[#A068FF]" />
-            <span>SOURCE:</span>
-            <span className="font-bold text-[#A068FF]">{selectedSource}</span>
-          </button>
-
-          {/* Settings Icon Button */}
-          <button 
-            onClick={() => setActiveTab('settings')}
-            className="p-2.5 rounded-full bg-[#070319] border border-[#A068FF]/30 text-slate-300 hover:text-[#A068FF] transition-colors"
-          >
-            <Settings className="w-4 h-4" />
-          </button>
-
-          {/* User Profile */}
-          <div className="flex items-center gap-3 pl-3 border-l border-[#A068FF]/20">
-            <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-[#A068FF] to-blue-600 p-0.5">
-              <div className="w-full h-full bg-[#060218] rounded-full flex items-center justify-center font-bold text-xs text-white">
-                RP
+          {/* Quick Search toggle */}
+          <div className="relative">
+            {showSearch ? (
+              <div className="flex items-center animate-fadeIn">
+                <input
+                  type="text"
+                  placeholder="Search telemetry..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  autoFocus
+                  onBlur={() => !searchQuery && setShowSearch(false)}
+                  className="pl-8 pr-3 py-1.5 w-44 sm:w-56 rounded-full text-xs bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-white border border-neutral-300 dark:border-neutral-700 focus:outline-none focus:ring-1 focus:ring-neutral-900"
+                />
+                <Search className="w-3.5 h-3.5 text-neutral-400 absolute left-2.5" />
               </div>
-            </div>
-            <div className="hidden lg:block text-left">
-              <p className="text-xs font-bold text-white leading-none">Retail Pulse Admin</p>
-              <p className="text-[10px] text-[#A068FF] leading-none mt-1">Data Architect</p>
-            </div>
+            ) : (
+              <button
+                onClick={() => setShowSearch(true)}
+                className="w-9 h-9 rounded-full border border-neutral-200 dark:border-neutral-800 flex items-center justify-center text-neutral-600 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+                title="Search records"
+              >
+                <Search className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+
+          {/* Active Data Source Toggle Pill */}
+          <div className="flex items-center rounded-full p-1 bg-neutral-100 dark:bg-neutral-900 border border-neutral-200/80 dark:border-neutral-800 text-[11px] font-semibold">
+            <button
+              onClick={() => selectSource('ShopPulse')}
+              className={`px-3 py-1 rounded-full transition-all ${
+                selectedSource === 'ShopPulse'
+                  ? 'bg-neutral-950 text-white dark:bg-white dark:text-neutral-950 shadow-xs'
+                  : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-950'
+              }`}
+            >
+              ShopPulse
+            </button>
+            <button
+              onClick={() => selectSource('TechMart')}
+              className={`px-3 py-1 rounded-full transition-all ${
+                selectedSource === 'TechMart'
+                  ? 'bg-neutral-950 text-white dark:bg-white dark:text-neutral-950 shadow-xs'
+                  : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-950'
+              }`}
+            >
+              TechMart
+            </button>
+          </div>
+
+          {/* Live Ingestion Indicator Pill */}
+          <div className="hidden xl:flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-50/60 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-400 text-xs font-semibold">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span className="text-[11px] uppercase tracking-wider">
+              {isConnectorConnected ? 'Ingestion Live' : 'Offline'}
+            </span>
           </div>
 
         </div>
 
       </div>
+
+      {/* Mobile / Dropdown Navigation Menu */}
+      {mobileMenuOpen && (
+        <div className="mt-4 pt-4 border-t border-neutral-100 dark:border-neutral-800 grid grid-cols-2 sm:grid-cols-3 gap-2 animate-fadeIn">
+          {NAV_TABS.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => {
+                setActiveTab(tab.id);
+                setMobileMenuOpen(false);
+              }}
+              className={`p-3 rounded-2xl text-left text-xs font-semibold transition-all border ${
+                activeTab === tab.id
+                  ? 'bg-neutral-950 text-white border-neutral-950 dark:bg-white dark:text-neutral-950'
+                  : 'bg-neutral-50 dark:bg-neutral-800/40 border-neutral-200/60 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      )}
     </header>
   );
 };
