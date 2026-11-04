@@ -214,7 +214,7 @@ export const LeftSidebar: React.FC<LeftSidebarProps> = ({
         <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 px-2">Launch Other Sites</p>
         <div className="grid grid-cols-2 gap-1.5">
           <a
-            href={(import.meta as any).env?.VITE_TECHMART_URL || (import.meta.env.PROD ? '/techmart' : 'http://localhost:5174')}
+            href={(import.meta as any).env?.VITE_TECHMART_URL || (import.meta.env.PROD ? '/techmart/' : 'http://localhost:5174')}
             target="_blank"
             rel="noreferrer"
             className="flex items-center justify-between px-2.5 py-1.5 rounded-xl text-[11px] font-bold text-sky-700 bg-sky-50 hover:bg-sky-100/80 transition border border-sky-200/60"
