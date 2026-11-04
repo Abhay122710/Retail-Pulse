@@ -1,6 +1,62 @@
 {
   "events": [
     {
+      "event_id": "EVT-SP-mw2iurv2-1500",
+      "source": "ShopPulse",
+      "source_type": "ecommerce",
+      "event_type": "PAGE_VIEW",
+      "session_id": "SP-SESSION-785135",
+      "user_id": null,
+      "canonical_user_id": null,
+      "product_id": null,
+      "canonical_product_id": null,
+      "product_name": null,
+      "category": null,
+      "order_id": null,
+      "canonical_transaction_id": null,
+      "search_query": null,
+      "results_count": null,
+      "view_duration_seconds": null,
+      "quantity": null,
+      "unit_price": null,
+      "total_amount": null,
+      "cart_value": null,
+      "item_count": null,
+      "rating": null,
+      "payment_method": null,
+      "timestamp": "2026-11-04T19:40:45.982Z",
+      "payload": "{\"source\":\"ShopPulse\",\"source_type\":\"ecommerce\",\"event_type\":\"PAGE_VIEW\",\"session_id\":\"SP-SESSION-785135\",\"timestamp\":\"2026-11-04T19:40:45.982Z\",\"page\":\"Home\"}",
+      "created_at": "2026-11-04T19:40:46.093Z"
+    },
+    {
+      "event_id": "EVT-SP-mw2iurtl-4734",
+      "source": "ShopPulse",
+      "source_type": "ecommerce",
+      "event_type": "PAGE_VIEW",
+      "session_id": "SP-SESSION-785135",
+      "user_id": null,
+      "canonical_user_id": null,
+      "product_id": null,
+      "canonical_product_id": null,
+      "product_name": null,
+      "category": null,
+      "order_id": null,
+      "canonical_transaction_id": null,
+      "search_query": null,
+      "results_count": null,
+      "view_duration_seconds": null,
+      "quantity": null,
+      "unit_price": null,
+      "total_amount": null,
+      "cart_value": null,
+      "item_count": null,
+      "rating": null,
+      "payment_method": null,
+      "timestamp": "2026-11-04T19:40:45.979Z",
+      "payload": "{\"source\":\"ShopPulse\",\"source_type\":\"ecommerce\",\"event_type\":\"PAGE_VIEW\",\"session_id\":\"SP-SESSION-785135\",\"timestamp\":\"2026-11-04T19:40:45.979Z\",\"page\":\"Home\"}",
+      "created_at": "2026-11-04T19:40:46.041Z"
+    },
+    {
       "event_id": "EVT-SP-mw2i27m3-5727",
       "source": "ShopPulse",
       "source_type": "ecommerce",
@@ -5159,8 +5215,8 @@
       "source_name": "ShopPulse General E-Commerce",
       "source_type": "ecommerce",
       "status": "Connected",
-      "last_seen": "2026-11-04T19:18:33.430Z",
-      "event_count": 102
+      "last_seen": "2026-11-04T19:40:45.982Z",
+      "event_count": 104
     },
     {
       "source_id": "TechMart",
@@ -42219,6 +42275,13 @@
       "user_id": null,
       "started_at": "2026-11-04T19:18:33.423Z",
       "last_activity": "2026-11-04T19:18:33.430Z"
+    },
+    {
+      "session_id": "SP-SESSION-785135",
+      "source": "ShopPulse",
+      "user_id": null,
+      "started_at": "2026-11-04T19:40:45.979Z",
+      "last_activity": "2026-11-04T19:40:45.982Z"
     }
   ],
   "forecasts": [
@@ -42965,6 +43028,61 @@
     }
   ],
   "pipeline_audit": [
+    {
+      "audit_id": "AUD-mw2j9998-194",
+      "timestamp": "2026-11-04T19:52:01.820Z",
+      "source": "TechMart",
+      "stage": "VALIDATION",
+      "status": "REJECTED",
+      "event_type": "ORDER_CREATED",
+      "error_details": [
+        "Field \"units\" cannot be negative (received -10)",
+        "Field \"net_value\" cannot be negative (received -50000)"
+      ],
+      "correlation_id": "INGEST"
+    },
+    {
+      "audit_id": "AUD-mw2j998p-720",
+      "timestamp": "2026-11-04T19:52:01.801Z",
+      "source": "MaliciousUnknownStore",
+      "stage": "VALIDATION",
+      "status": "REJECTED",
+      "event_type": "ORDER_CREATED",
+      "error_details": [
+        "Unsupported source \"MaliciousUnknownStore\". Allowed: ShopPulse, TechMart"
+      ],
+      "correlation_id": "INGEST"
+    },
+    {
+      "audit_id": "AUD-mw2j9984-998",
+      "timestamp": "2026-11-04T19:52:01.780Z",
+      "source": "ShopPulse",
+      "stage": "VALIDATION",
+      "status": "REJECTED",
+      "event_type": "INVALID_NON_EXISTENT_TYPE_123",
+      "error_details": [
+        "Unsupported event_type \"INVALID_NON_EXISTENT_TYPE_123\""
+      ],
+      "correlation_id": "INGEST"
+    },
+    {
+      "audit_id": "AUD-mw2iurvx-177",
+      "timestamp": "2026-11-04T19:40:46.125Z",
+      "source": "ShopPulse",
+      "stage": "INGESTION",
+      "status": "ACCEPTED",
+      "event_type": "PAGE_VIEW",
+      "correlation_id": "REQ-mw2iurv1"
+    },
+    {
+      "audit_id": "AUD-mw2iuruf-427",
+      "timestamp": "2026-11-04T19:40:46.071Z",
+      "source": "ShopPulse",
+      "stage": "INGESTION",
+      "status": "ACCEPTED",
+      "event_type": "PAGE_VIEW",
+      "correlation_id": "REQ-mw2iurtk"
+    },
     {
       "audit_id": "AUD-mw2ii8as-903",
       "timestamp": "2026-11-04T19:31:00.868Z",
@@ -44604,40 +44722,40 @@
   ],
   "pipeline_counters": {
     "ShopPulse": {
-      "total_processed": 53,
-      "records_accepted": 19,
-      "records_rejected": 34,
+      "total_processed": 56,
+      "records_accepted": 21,
+      "records_rejected": 35,
       "records_deduplicated": 0,
-      "validation_errors": 34,
-      "last_successful_ingestion": "2026-11-04T19:18:33.534Z",
-      "last_failed_ingestion": "2026-11-04T19:31:00.831Z"
+      "validation_errors": 35,
+      "last_successful_ingestion": "2026-11-04T19:40:46.125Z",
+      "last_failed_ingestion": "2026-11-04T19:52:01.780Z"
     },
     "ALL": {
-      "total_processed": 144,
-      "records_accepted": 41,
-      "records_rejected": 102,
+      "total_processed": 149,
+      "records_accepted": 43,
+      "records_rejected": 105,
       "records_deduplicated": 1,
-      "validation_errors": 102,
-      "last_successful_ingestion": "2026-11-04T19:18:33.534Z",
-      "last_failed_ingestion": "2026-11-04T19:31:00.868Z"
+      "validation_errors": 105,
+      "last_successful_ingestion": "2026-11-04T19:40:46.125Z",
+      "last_failed_ingestion": "2026-11-04T19:52:01.820Z"
     },
     "MaliciousUnknownStore": {
-      "total_processed": 34,
+      "total_processed": 35,
       "records_accepted": 0,
-      "records_rejected": 34,
+      "records_rejected": 35,
       "records_deduplicated": 0,
-      "validation_errors": 34,
+      "validation_errors": 35,
       "last_successful_ingestion": null,
-      "last_failed_ingestion": "2026-11-04T19:31:00.852Z"
+      "last_failed_ingestion": "2026-11-04T19:52:01.801Z"
     },
     "TechMart": {
-      "total_processed": 57,
+      "total_processed": 58,
       "records_accepted": 22,
-      "records_rejected": 34,
+      "records_rejected": 35,
       "records_deduplicated": 1,
-      "validation_errors": 34,
+      "validation_errors": 35,
       "last_successful_ingestion": "2026-11-04T19:18:28.239Z",
-      "last_failed_ingestion": "2026-11-04T19:31:00.868Z"
+      "last_failed_ingestion": "2026-11-04T19:52:01.820Z"
     }
   },
   "scenarios": []

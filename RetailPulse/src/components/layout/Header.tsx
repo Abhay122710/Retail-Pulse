@@ -1,3 +1,4 @@
+import { getStorefrontUrls } from '../../utils/storefrontUrls';
 import React, { useState, useRef, useEffect } from 'react';
 import { useDashboard } from '../../context/DashboardContext';
 import type { DashboardTab } from '../../types';
@@ -42,6 +43,7 @@ const SECONDARY_MODULES: Array<{ id: DashboardTab; label: string; description: s
 ];
 
 export const Header: React.FC = () => {
+  const { shoppulseUrl, techmartUrl } = getStorefrontUrls();
   const { 
     activeTab, 
     setActiveTab, 
@@ -129,7 +131,7 @@ export const Header: React.FC = () => {
           {/* Quick Launch Storefront Buttons */}
           <div className="hidden xl:flex items-center gap-1.5 pl-2 border-l border-neutral-200/80 dark:border-white/10">
             <a
-              href="http://localhost:3000"
+              href={shoppulseUrl}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 border border-purple-200/80 dark:border-purple-800/50 hover:bg-purple-100 dark:hover:bg-purple-900/60 transition-all cursor-pointer shadow-2xs hover:scale-105"
@@ -141,7 +143,7 @@ export const Header: React.FC = () => {
             </a>
 
             <a
-              href="http://localhost:5174"
+              href={techmartUrl}
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[11px] font-bold bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300 border border-sky-200/80 dark:border-sky-800/50 hover:bg-sky-100 dark:hover:bg-sky-900/60 transition-all cursor-pointer shadow-2xs hover:scale-105"
@@ -360,7 +362,7 @@ export const Header: React.FC = () => {
           <p className="text-[10px] font-bold uppercase tracking-wider text-neutral-400 px-2 pt-2">Launch Stores</p>
           <div className="grid grid-cols-2 gap-2">
             <a
-              href="http://localhost:3000"
+              href={shoppulseUrl}
               target="_blank"
               rel="noreferrer"
               className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/50"
@@ -370,7 +372,7 @@ export const Header: React.FC = () => {
               <ExternalLink size={10} />
             </a>
             <a
-              href="http://localhost:5174"
+              href={techmartUrl}
               target="_blank"
               rel="noreferrer"
               className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800/50"

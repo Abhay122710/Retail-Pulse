@@ -1,3 +1,4 @@
+import { getStorefrontUrls } from '../utils/storefrontUrls';
 import React from 'react';
 import { useDashboard } from '../context/DashboardContext';
 import { DataPipelineVisual } from '../components/layout/DataPipelineVisual';
@@ -16,6 +17,7 @@ import {
 import type { SourceSelection } from '../types';
 
 export const DataSourcesPage: React.FC = () => {
+  const { shoppulseUrl, techmartUrl } = getStorefrontUrls();
   const { selectedSource, selectSource, setActiveTab, sendTestEvent } = useDashboard();
 
   const handleSelectSource = (source: SourceSelection) => {
@@ -121,7 +123,7 @@ export const DataSourcesPage: React.FC = () => {
                 {selectedSource === 'ShopPulse' ? 'Selected ✓' : 'Select Source'}
               </button>
               <a
-                href="http://localhost:3000"
+                href={shoppulseUrl}
                 target="_blank"
                 rel="noreferrer"
                 onClick={(e) => e.stopPropagation()}
@@ -201,7 +203,7 @@ export const DataSourcesPage: React.FC = () => {
                 {selectedSource === 'TechMart' ? 'Selected ✓' : 'Select Source'}
               </button>
               <a
-                href="http://localhost:5174"
+                href={techmartUrl}
                 target="_blank"
                 rel="noreferrer"
                 onClick={(e) => e.stopPropagation()}

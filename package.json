@@ -3,6 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "description": "Multi-Source E-Commerce Intelligence Suite (Retail Pulse, ShopPulse, TechMart & Connector)",
+  "workspaces": [
+    "RetailPulse",
+    "Site1",
+    "TechMart",
+    "retail-pulse-connector"
+  ],
   "scripts": {
     "dev": "npm run dev:all",
     "dev:all": "npx -y concurrently --kill-others -n \"ml,connector,shoppulse,techmart,retailpulse\" -c \"yellow,magenta,blue,cyan,green\" \"npm run dev:ml\" \"npm --prefix retail-pulse-connector run dev\" \"npm --prefix Site1 run dev\" \"npm --prefix TechMart run dev\" \"npm --prefix RetailPulse run dev\"",
@@ -11,7 +17,8 @@
     "dev:shoppulse": "npm --prefix Site1 run dev",
     "dev:techmart": "npm --prefix TechMart run dev",
     "dev:retailpulse": "npm --prefix RetailPulse run dev",
-    "build": "npm --prefix retail-pulse-connector run build && npm --prefix Site1 run build && npm --prefix TechMart run build && npm --prefix RetailPulse run build",
+    "build": "node build-vercel.js",
+    "build:all": "npm --prefix retail-pulse-connector run build && node build-vercel.js",
     "test": "npm --prefix retail-pulse-connector test",
     "test:python": ".\\retailpulse-ml\\.venv\\Scripts\\pytest -v retailpulse-ml",
     "test:all": "npm run test && npm run test:python"

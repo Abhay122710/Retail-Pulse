@@ -312,7 +312,7 @@ export const Navbar: React.FC<NavbarProps> = ({ activeTab, setActiveTab, onOpenC
             {/* Launch Other Sites Quick Buttons */}
             <div className="hidden xl:flex items-center gap-1.5 pl-2 border-l border-slate-200">
               <a
-                href="http://localhost:3000"
+                href={(import.meta as any).env?.VITE_SHOPPULSE_URL || (import.meta.env.PROD ? '/shoppulse' : 'http://localhost:3000')}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-purple-50 text-purple-700 border border-purple-200 hover:bg-purple-100 transition-all cursor-pointer shadow-2xs hover:scale-105"

@@ -1,9 +1,11 @@
+import { getStorefrontUrls } from '../../utils/storefrontUrls';
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search, ShoppingBag, Cpu, Maximize2, ExternalLink } from 'lucide-react';
 import { useDashboard } from '../../context/DashboardContext';
 
 export const StorefrontCourseCards: React.FC = () => {
+  const { shoppulseUrl, techmartUrl } = getStorefrontUrls();
   const { selectedSource, selectSource, setActiveTab } = useDashboard();
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -84,7 +86,7 @@ export const StorefrontCourseCards: React.FC = () => {
             </span>
             <div className="flex items-center gap-2">
               <a
-                href="http://localhost:3000"
+                href={shoppulseUrl}
                 target="_blank"
                 rel="noreferrer"
                 onClick={(e) => e.stopPropagation()}
@@ -131,7 +133,7 @@ export const StorefrontCourseCards: React.FC = () => {
             </span>
             <div className="flex items-center gap-2">
               <a
-                href="http://localhost:5174"
+                href={techmartUrl}
                 target="_blank"
                 rel="noreferrer"
                 onClick={(e) => e.stopPropagation()}

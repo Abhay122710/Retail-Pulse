@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/shoppulse/assets/(.*)", "destination": "/shoppulse/assets/$1" },
+    { "source": "/shoppulse", "destination": "/shoppulse/index.html" },
+    { "source": "/shoppulse/(.*)", "destination": "/shoppulse/index.html" },
+    { "source": "/techmart/assets/(.*)", "destination": "/techmart/assets/$1" },
+    { "source": "/techmart", "destination": "/techmart/index.html" },
+    { "source": "/techmart/(.*)", "destination": "/techmart/index.html" },
+    { "source": "/assets/(.*)", "destination": "/assets/$1" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
