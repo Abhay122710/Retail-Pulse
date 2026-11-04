@@ -43,6 +43,23 @@
 }
 
 /* Light & All-Black Glass Card Aesthetics */
+.glass-card {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(15, 23, 42, 0.07);
+  box-shadow: 0 12px 35px -10px rgba(15, 23, 42, 0.05);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark .glass-card {
+  background: rgba(18, 18, 18, 0.88);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.8);
+}
+
 .glass-card-light {
   background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(20px);
@@ -176,4 +193,14 @@
 }
 .dark ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.4);
+}
+
+/* Bot Floating Animation */
+@keyframes botBob {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-bot-bob {
+  animation: botBob 3.5s ease-in-out infinite;
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDashboard } from '../context/DashboardContext';
 import { LiveActivityFeed } from '../components/layout/LiveActivityFeed';
+import { ActionMenu } from '../components/common/ActionMenu';
 import { 
   ShoppingBag, 
   Cpu, 
@@ -8,7 +9,8 @@ import {
   Eye, 
   Search, 
   ShoppingCart, 
-  Download
+  Download,
+  Sparkles
 } from 'lucide-react';
 
 export const LiveStreamPage: React.FC = () => {
@@ -98,22 +100,38 @@ export const LiveStreamPage: React.FC = () => {
         <span className="text-neutral-600 dark:text-neutral-300 font-medium text-center sm:text-left">
           Stream live events from running storefronts or simulate live user telemetry:
         </span>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => sendTestEvent('ShopPulse')}
-            className="pill-btn-subtle px-3.5 py-1.5 font-bold flex items-center gap-1.5 cursor-pointer"
-          >
-            <ShoppingBag className="w-3.5 h-3.5 text-indigo-500" />
-            <span>Simulate ShopPulse Click</span>
-          </button>
-          <button
-            onClick={() => sendTestEvent('TechMart')}
-            className="pill-btn-subtle px-3.5 py-1.5 font-bold flex items-center gap-1.5 cursor-pointer"
-          >
-            <Cpu className="w-3.5 h-3.5 text-cyan-500" />
-            <span>Simulate TechMart Click</span>
-          </button>
-        </div>
+        <ActionMenu
+          label="Simulate Telemetry"
+          icon={MousePointerClick}
+          variant="secondary"
+          items={[
+            {
+              id: 'sim-shoppulse',
+              label: 'ShopPulse Click',
+              description: 'General E-Commerce (Port 3000)',
+              icon: ShoppingBag,
+              onClick: () => sendTestEvent('ShopPulse')
+            },
+            {
+              id: 'sim-techmart',
+              label: 'TechMart Click',
+              description: 'Electronics & Gadgets (Port 5174)',
+              icon: Cpu,
+              onClick: () => sendTestEvent('TechMart')
+            },
+            {
+              divider: true,
+              label: ''
+            },
+            {
+              id: 'sim-random',
+              label: 'Random Store Event',
+              description: 'Simulate randomized user session',
+              icon: Sparkles,
+              onClick: () => sendTestEvent()
+            }
+          ]}
+        />
       </div>
 
       {/* Live Stream Activity Radar Feed */}

@@ -1,30 +1,84 @@
 import { Request, Response } from 'express';
 import { EventService } from '../services/eventService.js';
 import { db } from '../models/database.js';
+import { Logger } from '../utils/logger.js';
 
 export class EventsController {
   public static handlePostEvent(req: Request, res: Response): void {
+    const correlationId = (req.headers['x-correlation-id'] as string) || `REQ-${Date.now().toString(36)}`;
+
     try {
       const payload = req.body;
-      if (!payload || !payload.source || !payload.event_type) {
+
+      if (!payload) {
+        Logger.warn('INGESTION', 'Rejected request with empty body', correlationId);
         res.status(400).json({
           success: false,
-          message: 'Invalid payload: source and event_type are required.'
+          error_category: 'VALIDATION_ERROR',
+          message: 'Invalid payload: Request body cannot be empty.'
         });
         return;
       }
 
-      const canonicalEvent = EventService.processEvent(payload);
+      // Support batch ingestion if an array of events is submitted
+      if (Array.isArray(payload)) {
+        if (payload.length === 0) {
+          res.status(400).json({
+            success: false,
+            error_category: 'VALIDATION_ERROR',
+            message: 'Batch array cannot be empty.'
+          });
+          return;
+        }
+
+        const processed = [];
+        const errors = [];
+
+        for (let i = 0; i < payload.length; i++) {
+          try {
+            const evt = EventService.processEvent(payload[i], correlationId);
+            processed.push(evt);
+          } catch (itemErr: any) {
+            errors.push({ index: i, message: itemErr.message });
+          }
+        }
+
+        res.status(201).json({
+          success: true,
+          batch: true,
+          records_processed: payload.length,
+          records_accepted: processed.length,
+          records_rejected: errors.length,
+          errors: errors.length > 0 ? errors : undefined,
+          events: processed
+        });
+        return;
+      }
+
+      // Single event ingestion
+      const canonicalEvent = EventService.processEvent(payload, correlationId);
 
       res.status(201).json({
         success: true,
         event_id: canonicalEvent.event_id,
+        correlation_id: correlationId,
         message: 'Event received'
       });
     } catch (err: any) {
-      console.error('[EventsController] Error handling event:', err);
-      res.status(500).json({
+      const isValidationError = err.message.startsWith('Validation Error') || err.message.includes('Unsupported');
+      const statusCode = isValidationError ? 400 : 500;
+      const errorCategory = isValidationError ? 'VALIDATION_ERROR' : 'INTERNAL_ERROR';
+
+      Logger.error(
+        'INGESTION', 
+        `Error ingesting event: ${err.message}`, 
+        correlationId, 
+        errorCategory
+      );
+
+      res.status(statusCode).json({
         success: false,
+        error_category: errorCategory,
         message: err.message || 'Internal server error'
       });
     }
@@ -34,7 +88,8 @@ export class EventsController {
     try {
       const source = req.query.source as string | undefined;
       const sessionId = req.query.session_id as string | undefined;
-      const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : 50;
+      const rawLimit = req.query.limit ? parseInt(req.query.limit as string, 10) : 50;
+      const limit = isNaN(rawLimit) || rawLimit <= 0 ? 50 : Math.min(rawLimit, 1000);
 
       const events = db.getEvents({ source, limit, session_id: sessionId });
 
@@ -44,15 +99,17 @@ export class EventsController {
         events
       });
     } catch (err: any) {
-      console.error('[EventsController] Error fetching events:', err);
+      Logger.error('QUERY', `Error fetching events: ${err.message}`, 'GET-EVENTS', 'DATABASE_ERROR');
       res.status(500).json({
         success: false,
+        error_category: 'DATABASE_ERROR',
         message: err.message || 'Internal server error'
       });
     }
   }
 
   public static handleTestEvent(req: Request, res: Response): void {
+    const correlationId = `TEST-${Date.now().toString(36)}`;
     try {
       const source = (req.body.source || 'ShopPulse') as 'ShopPulse' | 'TechMart';
       const isShopPulse = source === 'ShopPulse';
@@ -91,7 +148,7 @@ export class EventsController {
         testPayload.view_duration_seconds = Math.floor(15 + Math.random() * 30);
       }
 
-      const canonicalEvent = EventService.processEvent(testPayload);
+      const canonicalEvent = EventService.processEvent(testPayload, correlationId);
 
       res.status(201).json({
         success: true,
@@ -99,9 +156,10 @@ export class EventsController {
         event: canonicalEvent
       });
     } catch (err: any) {
-      console.error('[EventsController] Error handling test event:', err);
+      Logger.error('INGESTION', `Error generating test event: ${err.message}`, correlationId, 'INTERNAL_ERROR');
       res.status(500).json({
         success: false,
+        error_category: 'INTERNAL_ERROR',
         message: err.message || 'Internal server error'
       });
     }

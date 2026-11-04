@@ -11,7 +11,6 @@ import type {
 import { retailPulseApiService } from '../services/retailPulseApiService';
 import type { ApiCanonicalEvent, ApiExtractionRecord, ApiSourceRecord } from '../services/retailPulseApiService';
 import { extractionService, DATA_SCOPES } from '../services/extractionService';
-import confetti from 'canvas-confetti';
 
 interface DashboardContextType {
   activeTab: DashboardTab;
@@ -56,16 +55,25 @@ interface DashboardContextType {
   selectedStatusFilter: string;
   setSelectedStatusFilter: (status: string) => void;
 
-  // Theme support
+  // Theme & Preset styling
   theme: 'light' | 'dark';
   setTheme: (t: 'light' | 'dark') => void;
   toggleTheme: () => void;
+  stylePreset: 'fluenta' | 'ember';
+  setStylePreset: (p: 'fluenta' | 'ember') => void;
+  toggleStylePreset: () => void;
+
+  // Authentication
+  isAuthenticated: boolean;
+  currentUser: string | null;
+  login: (username: string, pass: string) => boolean;
+  logout: () => void;
 }
 
 const DashboardContext = createContext<DashboardContextType | undefined>(undefined);
 
 export const DashboardProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [activeTab, setActiveTab] = useState<DashboardTab>('extraction');
+  const [activeTab, setActiveTab] = useState<DashboardTab>('overview');
   const [selectedSource, setSelectedSourceState] = useState<SourceSelection>('ALL SOURCES');
 
   const [isConnectorConnected, setIsConnectorConnected] = useState<boolean>(true);
@@ -88,8 +96,8 @@ export const DashboardProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedStatusFilter, setSelectedStatusFilter] = useState<string>('All');
 
-  // Baseline empty insights without fake demo numbers
-  const [currentInsights] = useState<SourceInsights>({
+  // Baseline insights state populated dynamically from Connector API
+  const [currentInsights, setCurrentInsights] = useState<SourceInsights>({
     source: 'ShopPulse',
     totalRevenue: '₹0',
     totalOrdersOrTx: '0',
@@ -127,6 +135,73 @@ export const DashboardProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
+  // Style Preset state ('ember' vs 'fluenta' matching reference images)
+  const [stylePreset, setStylePresetState] = useState<'fluenta' | 'ember'>(() => {
+    try {
+      const saved = localStorage.getItem('retailpulse_style_preset');
+      return (saved === 'fluenta' || saved === 'ember') ? saved : 'ember';
+    } catch {
+      return 'ember';
+    }
+  });
+
+  const setStylePreset = (newPreset: 'fluenta' | 'ember') => {
+    setStylePresetState(newPreset);
+    try {
+      localStorage.setItem('retailpulse_style_preset', newPreset);
+    } catch {
+      // ignore
+    }
+  };
+
+  const toggleStylePreset = () => {
+    setStylePreset(stylePreset === 'fluenta' ? 'ember' : 'fluenta');
+  };
+
+  // Authentication state with local storage persistence
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('retailpulse_authenticated') === 'true';
+    } catch {
+      return false;
+    }
+  });
+
+  const [currentUser, setCurrentUser] = useState<string | null>(() => {
+    try {
+      const isAuth = localStorage.getItem('retailpulse_authenticated') === 'true';
+      return isAuth ? (localStorage.getItem('retailpulse_user') || 'admin') : null;
+    } catch {
+      return null;
+    }
+  });
+
+  const login = (u: string, p: string): boolean => {
+    if (u.trim().toLowerCase() === 'admin' && p === 'admin123') {
+      setIsAuthenticated(true);
+      setCurrentUser('admin');
+      try {
+        localStorage.setItem('retailpulse_authenticated', 'true');
+        localStorage.setItem('retailpulse_user', 'admin');
+      } catch {
+        // ignore
+      }
+      return true;
+    }
+    return false;
+  };
+
+  const logout = () => {
+    setIsAuthenticated(false);
+    setCurrentUser(null);
+    try {
+      localStorage.removeItem('retailpulse_authenticated');
+      localStorage.removeItem('retailpulse_user');
+    } catch {
+      // ignore
+    }
+  };
+
   useEffect(() => {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
@@ -146,10 +221,11 @@ export const DashboardProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
     if (isHealthy) {
       try {
-        const [sources, events, extractions] = await Promise.all([
+        const [sources, events, extractions, insights] = await Promise.all([
           retailPulseApiService.getSources(),
           retailPulseApiService.getEvents(selectedSource, 100),
-          retailPulseApiService.getExtractions(selectedSource)
+          retailPulseApiService.getExtractions(selectedSource),
+          retailPulseApiService.getInsights(selectedSource)
         ]);
 
         if (sources && sources.length > 0) setSourcesList(sources);
@@ -161,6 +237,7 @@ export const DashboardProvider: React.FC<{ children: React.ReactNode }> = ({ chi
           }
         }
         if (extractions) setExtractionsHistory(extractions);
+        if (insights) setCurrentInsights(insights);
         setLastUpdatedText(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
       } catch (err) {
         console.warn('Error fetching live data:', err);
@@ -199,13 +276,6 @@ export const DashboardProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     const targetSource = sourceOverride || (selectedSource === 'TechMart' ? 'TechMart' : 'ShopPulse');
     await retailPulseApiService.sendTestEvent(targetSource);
     await fetchLiveData();
-
-    confetti({
-      particleCount: 40,
-      spread: 60,
-      origin: { y: 0.4 },
-      colors: ['#A068FF', '#00F0FF', '#10B981']
-    });
   };
 
   const downloadCurrentExtractionJson = () => {
@@ -264,13 +334,6 @@ export const DashboardProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         // Automatically trigger browser download of the freshly compiled JSON file!
         const srcTag = res.source.toLowerCase().replace(/\s+/g, '_');
         retailPulseApiService.downloadJsonFile(res.data, `retail_pulse_extracted_${srcTag}_${res.extraction_id}.json`);
-
-        confetti({
-          particleCount: 70,
-          spread: 80,
-          origin: { y: 0.5 },
-          colors: ['#10B981', '#00F0FF', '#A068FF']
-        });
       }
 
       await fetchLiveData();
@@ -329,7 +392,14 @@ export const DashboardProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         setSelectedStatusFilter,
         theme,
         setTheme,
-        toggleTheme
+        toggleTheme,
+        stylePreset,
+        setStylePreset,
+        toggleStylePreset,
+        isAuthenticated,
+        currentUser,
+        login,
+        logout
       }}
     >
       {children}

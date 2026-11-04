@@ -1,6 +1,7 @@
+import React from 'react';
 import type { TechMartProduct } from '../../types';
 import { useApp } from '../../context/AppContext';
-import { Star, ShoppingCart, Heart, Cpu } from 'lucide-react';
+import { Star, ShoppingBag, Heart, Check } from 'lucide-react';
 import { ImageWithFallback } from '../common/ImageWithFallback';
 
 interface ProductCardProps {
@@ -9,35 +10,33 @@ interface ProductCardProps {
 }
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product, onSelectProduct }) => {
-  const { addToCart, wishlist, toggleWishlist } = useApp();
+  const { addToCart, wishlist, toggleWishlist, cart } = useApp();
   const isWishlisted = wishlist.includes(product.sku);
+  const isInCart = cart.some((item) => item.product.sku === product.sku);
 
   const discountAmount = product.discount_percent
     ? Math.round((product.unit_price * product.discount_percent) / 100)
     : 0;
   const finalPrice = product.unit_price - discountAmount;
 
-  // Extract 2 key specifications for quick badge preview
-  const specEntries = Object.entries(product.product_specifications || {}).slice(0, 2);
-
   return (
-    <div className="glass-card rounded-2xl overflow-hidden flex flex-col justify-between group transition-all duration-300 relative border border-slate-800 hover:border-cyan-500/40">
+    <div className="bg-white rounded-2xl overflow-hidden flex flex-col justify-between group transition-all duration-300 relative border border-slate-200/80 hover:border-slate-300 hover:shadow-xl hover:-translate-y-1">
       
       {/* Badges Overlay */}
       <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5 items-start">
-        {product.discount_percent && (
-          <span className="px-2.5 py-1 rounded-lg bg-rose-500 text-slate-950 text-[11px] font-black tracking-wide shadow-lg">
-            {product.discount_percent}% OFF
-          </span>
-        )}
-        {product.is_featured && (
-          <span className="px-2 py-0.5 rounded-md bg-cyan-400 text-slate-950 text-[10px] font-bold uppercase tracking-wider">
-            Featured
-          </span>
-        )}
         {product.is_trending && (
-          <span className="px-2 py-0.5 rounded-md bg-blue-600 text-white text-[10px] font-bold uppercase tracking-wider">
-            Trending
+          <span className="px-2.5 py-0.5 rounded-full bg-slate-950 text-white text-[10px] font-bold uppercase tracking-wider shadow-xs">
+            New
+          </span>
+        )}
+        {product.discount_percent && (
+          <span className="px-2.5 py-0.5 rounded-full bg-[#FF5530] text-white text-[10px] font-black tracking-wide shadow-xs">
+            -{product.discount_percent}%
+          </span>
+        )}
+        {product.is_featured && !product.is_trending && (
+          <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-200 text-[10px] font-bold uppercase tracking-wider shadow-xs">
+            Bestseller
           </span>
         )}
       </div>
@@ -48,104 +47,89 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onSelectProdu
           e.stopPropagation();
           toggleWishlist(product.sku);
         }}
-        className={`absolute top-3 right-3 z-10 p-2 rounded-xl backdrop-blur-md transition-all ${
+        aria-label="Wishlist"
+        className={`absolute top-3 right-3 z-10 p-2 rounded-full transition-all shadow-xs ${
           isWishlisted
-            ? 'bg-rose-500/20 text-rose-400 border border-rose-500/40'
-            : 'bg-slate-900/60 text-slate-400 hover:text-cyan-400 border border-slate-700/50'
+            ? 'bg-rose-50 text-rose-500 border border-rose-200'
+            : 'bg-white/90 text-slate-400 hover:text-rose-500 hover:bg-white border border-slate-200/60'
         }`}
       >
-        <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-rose-400' : ''}`} />
+        <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-rose-500 text-rose-500' : ''}`} />
       </button>
 
-      {/* Product Image */}
+      {/* Product Image on Clean Light Container */}
       <div 
         onClick={() => onSelectProduct(product)}
-        className="w-full h-52 overflow-hidden cursor-pointer relative group-hover:scale-105 transition-transform duration-500"
+        className="w-full h-56 bg-[#f8f9fa] overflow-hidden cursor-pointer relative p-4 flex items-center justify-center"
       >
         <ImageWithFallback
           src={product.image_url}
           alt={product.item_title}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80" />
       </div>
 
       {/* Product Content */}
-      <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
+      <div className="p-4 flex-1 flex flex-col justify-between space-y-3 bg-white">
         
-        {/* Brand & Department */}
         <div>
-          <div className="flex items-center justify-between text-[11px] text-slate-400 font-medium mb-1">
-            <span className="text-cyan-400 font-bold uppercase tracking-wider">{product.brand_name}</span>
-            <span className="font-mono text-slate-500">{product.sku}</span>
+          {/* Brand & SKU */}
+          <div className="flex items-center justify-between text-[11px] font-semibold text-slate-400 mb-1">
+            <span className="text-[#FF5530] font-bold uppercase tracking-wider">{product.brand_name}</span>
+            <span className="font-mono text-slate-400">{product.department}</span>
           </div>
 
           {/* Title */}
           <h3
             onClick={() => onSelectProduct(product)}
-            className="text-sm font-semibold text-slate-100 hover:text-cyan-300 cursor-pointer line-clamp-2 leading-snug transition-colors"
+            className="text-sm font-bold text-slate-900 group-hover:text-[#FF5530] cursor-pointer line-clamp-1 leading-snug transition-colors"
           >
             {product.item_title}
           </h3>
         </div>
 
-        {/* Spec Badges Preview */}
-        {specEntries.length > 0 && (
-          <div className="flex flex-wrap gap-1">
-            {specEntries.map(([key, val]) => (
-              <span
-                key={key}
-                className="px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-[10px] font-mono text-slate-300 flex items-center gap-1"
-              >
-                <Cpu className="w-2.5 h-2.5 text-cyan-400" />
-                <span className="text-slate-400">{key}:</span> {val}
-              </span>
+        {/* Rating Score */}
+        <div className="flex items-center gap-1.5 text-xs text-slate-500">
+          <div className="flex items-center text-amber-400">
+            {[...Array(5)].map((_, i) => (
+              <Star
+                key={i}
+                className={`w-3.5 h-3.5 ${
+                  i < Math.floor(product.rating_score)
+                    ? 'fill-amber-400 text-amber-400'
+                    : 'text-slate-200 fill-slate-200'
+                }`}
+              />
             ))}
           </div>
-        )}
-
-        {/* Rating & Stock */}
-        <div className="flex items-center justify-between text-xs text-slate-400">
-          <div className="flex items-center gap-1 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded text-amber-300 font-semibold">
-            <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-            <span>{product.rating_score}</span>
-            <span className="text-[10px] text-slate-400 font-normal">({product.total_reviews})</span>
-          </div>
-
-          <div className="text-right">
-            {product.available_units > 0 ? (
-              <span className="text-[11px] text-emerald-400 font-medium">
-                {product.available_units} in stock
-              </span>
-            ) : (
-              <span className="text-[11px] text-rose-400 font-medium">Out of stock</span>
-            )}
-          </div>
+          <span className="text-slate-400 text-[11px] font-medium">({product.total_reviews})</span>
         </div>
 
-        {/* Pricing & Add to Cart */}
-        <div className="pt-2 border-t border-slate-800/80 flex items-center justify-between gap-2">
-          <div>
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-lg font-black text-white">
-                ₹{finalPrice.toLocaleString('en-IN')}
+        {/* Pricing & Circular Cart Button */}
+        <div className="pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
+          <div className="flex items-baseline gap-1.5">
+            <span className="text-base font-black text-slate-900">
+              ₹{finalPrice.toLocaleString('en-IN')}
+            </span>
+            {discountAmount > 0 && (
+              <span className="text-xs text-slate-400 line-through font-normal">
+                ₹{product.unit_price.toLocaleString('en-IN')}
               </span>
-              {discountAmount > 0 && (
-                <span className="text-xs text-slate-500 line-through font-normal">
-                  ₹{product.unit_price.toLocaleString('en-IN')}
-                </span>
-              )}
-            </div>
-            <p className="text-[10px] text-slate-500">Incl. GST & Tech Insurance</p>
+            )}
           </div>
 
+          {/* Circular Black Action Button like in reference image */}
           <button
             onClick={() => addToCart(product, 1)}
             disabled={product.available_units <= 0}
-            className="glow-button px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
+            title={isInCart ? 'Added to Cart' : 'Add to Cart'}
+            className={`w-9 h-9 rounded-full flex items-center justify-center transition-all shadow-md shrink-0 ${
+              isInCart
+                ? 'bg-emerald-600 text-white'
+                : 'bg-slate-950 hover:bg-[#FF5530] text-white hover:scale-105 active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed'
+            }`}
           >
-            <ShoppingCart className="w-3.5 h-3.5" />
-            <span>Add</span>
+            {isInCart ? <Check className="w-4 h-4" /> : <ShoppingBag className="w-4 h-4" />}
           </button>
         </div>
 

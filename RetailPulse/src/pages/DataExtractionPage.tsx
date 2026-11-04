@@ -1,6 +1,8 @@
 import React, { useState, useMemo } from 'react';
 import { useDashboard } from '../context/DashboardContext';
 import { DATA_SCOPES } from '../services/extractionService';
+import { ActionMenu } from '../components/common/ActionMenu';
+import { SegmentedControl } from '../components/common/SegmentedControl';
 import { 
   Download, 
   CheckSquare, 
@@ -16,7 +18,8 @@ import {
   Code, 
   Table as TableIcon,
   MousePointerClick,
-  RefreshCw
+  RefreshCw,
+  Filter
 } from 'lucide-react';
 
 export const DataExtractionPage: React.FC = () => {
@@ -236,39 +239,16 @@ export const DataExtractionPage: React.FC = () => {
             </p>
           </div>
 
-          {/* Source Toggle Pills */}
-          <div className="flex items-center rounded-full p-1 bg-white dark:bg-[#18181b] border border-neutral-200 dark:border-neutral-700 text-xs font-semibold self-start sm:self-auto">
-            <button
-              onClick={() => selectSource('ALL SOURCES')}
-              className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer ${
-                selectedSource === 'ALL SOURCES'
-                  ? 'bg-neutral-950 text-white dark:bg-white dark:text-black font-bold shadow-xs'
-                  : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white'
-              }`}
-            >
-              All Sources ({totalLiveCount})
-            </button>
-            <button
-              onClick={() => selectSource('ShopPulse')}
-              className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer ${
-                selectedSource === 'ShopPulse'
-                  ? 'bg-neutral-950 text-white dark:bg-white dark:text-black font-bold shadow-xs'
-                  : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white'
-              }`}
-            >
-              ShopPulse ({shopPulseCount})
-            </button>
-            <button
-              onClick={() => selectSource('TechMart')}
-              className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer ${
-                selectedSource === 'TechMart'
-                  ? 'bg-neutral-950 text-white dark:bg-white dark:text-black font-bold shadow-xs'
-                  : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white'
-              }`}
-            >
-              TechMart ({techMartCount})
-            </button>
-          </div>
+          {/* Source Toggle Segmented Control */}
+          <SegmentedControl
+            value={selectedSource}
+            onChange={(s) => selectSource(s as any)}
+            options={[
+              { value: 'ALL SOURCES', label: 'All Sources', count: totalLiveCount },
+              { value: 'ShopPulse', label: 'ShopPulse', count: shopPulseCount },
+              { value: 'TechMart', label: 'TechMart', count: techMartCount }
+            ]}
+          />
         </div>
 
         {/* Entity Scopes Checkbox Grid */}
@@ -479,48 +459,72 @@ export const DataExtractionPage: React.FC = () => {
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
-            {/* View Switcher Pills */}
-            <div className="flex items-center rounded-full p-1 bg-neutral-100 dark:bg-[#141414] border border-neutral-200/80 dark:border-neutral-800 text-xs font-semibold">
-              <button
-                onClick={() => setActiveTab('table')}
-                className={`px-3 py-1 rounded-full flex items-center gap-1.5 transition-all cursor-pointer ${
-                  activeTab === 'table'
-                    ? 'bg-neutral-950 text-white dark:bg-white dark:text-black font-bold shadow-xs'
-                    : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white'
-                }`}
-              >
-                <TableIcon className="w-3.5 h-3.5" /> Table View
-              </button>
-              <button
-                onClick={() => setActiveTab('json')}
-                className={`px-3 py-1 rounded-full flex items-center gap-1.5 transition-all cursor-pointer ${
-                  activeTab === 'json'
-                    ? 'bg-neutral-950 text-white dark:bg-white dark:text-black font-bold shadow-xs'
-                    : 'text-neutral-600 dark:text-neutral-400 hover:text-neutral-950 dark:hover:text-white'
-                }`}
-              >
-                <Code className="w-3.5 h-3.5" /> Raw JSON Schema
-              </button>
-            </div>
+          <div className="flex flex-wrap items-center gap-3">
+            {/* View Switcher Segmented Control */}
+            <SegmentedControl
+              value={activeTab}
+              onChange={(tab) => setActiveTab(tab)}
+              options={[
+                { value: 'table', label: 'Table View', icon: TableIcon },
+                { value: 'json', label: 'Raw JSON Schema', icon: Code }
+              ]}
+            />
 
-            {/* Event Filter Pills */}
+            {/* Consolidated Event Filter Menu */}
             {activeTab === 'table' && (
-              <div className="flex items-center gap-1 overflow-x-auto text-[11px] font-semibold">
-                {['ALL', 'CLICKBAIT', 'PRODUCT_VIEW', 'SEARCH', 'ORDERS', 'CART'].map((f) => (
-                  <button
-                    key={f}
-                    onClick={() => setEventTypeFilter(f)}
-                    className={`px-2.5 py-1 rounded-full border transition-all cursor-pointer ${
-                      eventTypeFilter === f
-                        ? 'bg-neutral-900 text-white dark:bg-white dark:text-black border-neutral-900 dark:border-white font-bold'
-                        : 'bg-white dark:bg-[#18181b] border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400 hover:border-neutral-400'
-                    }`}
-                  >
-                    {f === 'ALL' ? 'All Types' : f.replace('_', ' ')}
-                  </button>
-                ))}
-              </div>
+              <ActionMenu
+                label={
+                  eventTypeFilter === 'ALL'
+                    ? 'All Event Types'
+                    : eventTypeFilter.replace('_', ' ')
+                }
+                icon={Filter}
+                variant={eventTypeFilter === 'ALL' ? 'subtle' : 'secondary'}
+                items={[
+                  {
+                    id: 'filter-all',
+                    label: 'All Types',
+                    description: 'Show every recorded telemetry event',
+                    active: eventTypeFilter === 'ALL',
+                    onClick: () => setEventTypeFilter('ALL')
+                  },
+                  {
+                    id: 'filter-clickbait',
+                    label: 'Clickbaits & Banners',
+                    description: 'Banner impressions & promo clicks',
+                    active: eventTypeFilter === 'CLICKBAIT',
+                    onClick: () => setEventTypeFilter('CLICKBAIT')
+                  },
+                  {
+                    id: 'filter-view',
+                    label: 'Product Views',
+                    description: 'Catalog browsing & dwell tracking',
+                    active: eventTypeFilter === 'PRODUCT_VIEW',
+                    onClick: () => setEventTypeFilter('PRODUCT_VIEW')
+                  },
+                  {
+                    id: 'filter-search',
+                    label: 'Catalog Searches',
+                    description: 'Keyword search queries & results count',
+                    active: eventTypeFilter === 'SEARCH',
+                    onClick: () => setEventTypeFilter('SEARCH')
+                  },
+                  {
+                    id: 'filter-orders',
+                    label: 'Orders & Purchases',
+                    description: 'Gross checkout completions',
+                    active: eventTypeFilter === 'ORDERS',
+                    onClick: () => setEventTypeFilter('ORDERS')
+                  },
+                  {
+                    id: 'filter-cart',
+                    label: 'Cart Actions',
+                    description: 'Add to cart, remove from cart, cart view',
+                    active: eventTypeFilter === 'CART',
+                    onClick: () => setEventTypeFilter('CART')
+                  }
+                ]}
+              />
             )}
           </div>
         </div>

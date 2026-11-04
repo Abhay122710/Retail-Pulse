@@ -4,11 +4,16 @@
   "private": true,
   "description": "Multi-Source E-Commerce Intelligence Suite (Retail Pulse, ShopPulse, TechMart & Connector)",
   "scripts": {
-    "dev": "npx -y concurrently --kill-others -n \"connector,shoppulse,techmart,retailpulse\" -c \"magenta,blue,cyan,green\" \"npm --prefix retail-pulse-connector run dev\" \"npm --prefix Site1 run dev\" \"npm --prefix TechMart run dev\" \"npm --prefix RetailPulse run dev\"",
+    "dev": "npm run dev:all",
+    "dev:all": "npx -y concurrently --kill-others -n \"ml,connector,shoppulse,techmart,retailpulse\" -c \"yellow,magenta,blue,cyan,green\" \"npm run dev:ml\" \"npm --prefix retail-pulse-connector run dev\" \"npm --prefix Site1 run dev\" \"npm --prefix TechMart run dev\" \"npm --prefix RetailPulse run dev\"",
+    "dev:ml": ".\\retailpulse-ml\\.venv\\Scripts\\python.exe -m uvicorn app.main:app --app-dir retailpulse-ml --host 127.0.0.1 --port 8000",
     "dev:connector": "npm --prefix retail-pulse-connector run dev",
     "dev:shoppulse": "npm --prefix Site1 run dev",
     "dev:techmart": "npm --prefix TechMart run dev",
     "dev:retailpulse": "npm --prefix RetailPulse run dev",
-    "build": "npm --prefix retail-pulse-connector run build && npm --prefix Site1 run build && npm --prefix TechMart run build && npm --prefix RetailPulse run build"
+    "build": "npm --prefix retail-pulse-connector run build && npm --prefix Site1 run build && npm --prefix TechMart run build && npm --prefix RetailPulse run build",
+    "test": "npm --prefix retail-pulse-connector test",
+    "test:python": ".\\retailpulse-ml\\.venv\\Scripts\\pytest -v retailpulse-ml",
+    "test:all": "npm run test && npm run test:python"
   }
 }

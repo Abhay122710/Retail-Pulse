@@ -2,22 +2,27 @@
 
 @layer base {
   :root {
-    --bg-primary: #07090e;
-    --bg-secondary: #0d111a;
-    --bg-card: #131926;
-    --text-main: #f1f5f9;
+    --bg-primary: #f8f9fa;
+    --bg-surface: #ffffff;
+    --bg-card: #ffffff;
+    --bg-subtle: #f1f5f9;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
     --text-muted: #94a3b8;
-    --accent-cyan: #00f0ff;
-    --accent-blue: #3b82f6;
-    --accent-purple: #8b5cf6;
-    --border-glow: rgba(0, 240, 255, 0.15);
+    --accent-coral: #ff5530;
+    --accent-coral-hover: #e04420;
+    --accent-orange: #ea580c;
+    --accent-amber: #f59e0b;
+    --border-color: #e2e8f0;
+    --border-subtle: #f1f5f9;
   }
 
   body {
-    background-color: #06090e;
-    color: #f1f5f9;
+    background-color: #f8f9fa;
+    color: #0f172a;
     font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
 
   #root {
@@ -30,78 +35,99 @@
   }
 }
 
-/* Custom Utilities */
-.glass-panel {
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(0, 240, 255, 0.12);
+/* Custom Design System Utilities */
+.clean-card {
+  background: #ffffff;
+  border: 1px solid #eef2f6;
+  border-radius: 1.25rem;
+  box-shadow: 0 2px 8px -2px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.glass-card {
-  background: linear-gradient(135deg, rgba(19, 27, 45, 0.85) 0%, rgba(13, 17, 27, 0.95) 100%);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+.clean-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 12px 28px -6px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
+  transform: translateY(-3px);
 }
 
-.glass-card:hover {
-  border-color: rgba(0, 240, 255, 0.4);
-  box-shadow: 0 10px 30px -10px rgba(0, 240, 255, 0.25);
-  transform: translateY(-4px);
-}
-
-.glow-text-cyan {
-  text-shadow: 0 0 20px rgba(0, 240, 255, 0.6);
-}
-
-.glow-button {
-  background: linear-gradient(135deg, #00f0ff 0%, #3b82f6 100%);
-  color: #06090e;
+.btn-coral {
+  background-color: #ff5530;
+  color: #ffffff;
   font-weight: 700;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(255, 85, 48, 0.28);
 }
 
-.glow-button:hover {
-  box-shadow: 0 0 25px rgba(0, 240, 255, 0.6);
+.btn-coral:hover {
+  background-color: #e04420;
+  box-shadow: 0 6px 20px rgba(255, 85, 48, 0.4);
   transform: scale(1.02);
 }
 
-.glow-button-secondary {
-  background: rgba(15, 23, 42, 0.8);
-  border: 1px solid rgba(0, 240, 255, 0.4);
-  color: #00f0ff;
-  transition: all 0.3s ease;
+.btn-dark {
+  background-color: #0f172a;
+  color: #ffffff;
+  font-weight: 600;
+  transition: all 0.2s ease;
 }
 
-.glow-button-secondary:hover {
-  background: rgba(0, 240, 255, 0.15);
-  border-color: #00f0ff;
-  box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+.btn-dark:hover {
+  background-color: #1e293b;
+  transform: scale(1.02);
+}
+
+.btn-outline {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #0f172a;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-outline:hover {
+  background-color: #f8fafc;
+  border-color: #cbd5e1;
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #090d16;
+  background: #f1f5f9;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
-  border-radius: 4px;
+  background: #cbd5e1;
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #00f0ff;
+  background: #94a3b8;
 }
 
-@keyframes pulseGlow {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.9; }
+/* Floating Badge Animation */
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
 }
 
-.pulse-glow {
-  animation: pulseGlow 3s infinite ease-in-out;
+@keyframes floatReverse {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(6px); }
+}
+
+.animate-float-1 {
+  animation: floatSlow 4s ease-in-out infinite;
+}
+
+.animate-float-2 {
+  animation: floatReverse 4.5s ease-in-out infinite;
+}
+
+.animate-float-3 {
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
+.animate-float-4 {
+  animation: floatReverse 5.5s ease-in-out infinite;
 }

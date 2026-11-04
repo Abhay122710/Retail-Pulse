@@ -118,3 +118,51 @@ export interface DataExtractionRequest {
   source: SourceId | string;
   data_types: string[];
 }
+
+export interface PipelineAuditEntry {
+  audit_id: string;
+  timestamp: string;
+  source: SourceId | string;
+  stage: 'INGESTION' | 'VALIDATION' | 'TRANSFORMATION' | 'PERSISTENCE';
+  status: 'ACCEPTED' | 'REJECTED' | 'DEDUPLICATED';
+  event_type?: string;
+  error_details?: string[];
+  correlation_id: string;
+}
+
+export interface PipelineCounters {
+  total_processed: number;
+  records_accepted: number;
+  records_rejected: number;
+  records_deduplicated: number;
+  validation_errors: number;
+  last_successful_ingestion: string | null;
+  last_failed_ingestion: string | null;
+}
+
+export interface SimulatorScenario {
+  id: string;
+  name: string;
+  description?: string;
+  created_at: string;
+  assumptions: {
+    source: string;
+    price_change_pct: number;
+    demand_change_pct: number;
+    inventory_delta_pct: number;
+    lead_time_days?: number;
+    min_order_quantity?: number;
+  };
+  results: {
+    baseline_revenue: number;
+    scenario_revenue: number;
+    revenue_pct_change: number;
+    baseline_units: number;
+    scenario_units: number;
+    units_pct_change: number;
+    stockout_risk_level: 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
+    stock_requirements: number;
+    estimated_profit_impact?: number | null;
+    profit_margin_pct?: number | null;
+  };
+}

@@ -3,28 +3,31 @@ import { DashboardProvider, useDashboard } from './context/DashboardContext';
 import { Header } from './components/layout/Header';
 import { FooterTicker } from './components/layout/FooterTicker';
 import { LiveBackground } from './components/layout/LiveBackground';
+import { FluentaDock } from './components/layout/FluentaDock';
+import { ThemePresetSwitcher } from './components/common/ThemePresetSwitcher';
 
+import { OverviewPage } from './pages/OverviewPage';
 import { DataExtractionPage } from './pages/DataExtractionPage';
 import { LiveStreamPage } from './pages/LiveStreamPage';
+import { PredictiveAnalyticsPage } from './pages/PredictiveAnalyticsPage';
+import { WhatIfSimulatorPage } from './pages/WhatIfSimulatorPage';
+import { ProfitabilityPage } from './pages/ProfitabilityPage';
+import { BenchmarkingPage } from './pages/BenchmarkingPage';
+import { PipelineMonitoringPage } from './pages/PipelineMonitoringPage';
+import { SegmentationPage } from './pages/SegmentationPage';
+import { BusinessReportsPage } from './pages/BusinessReportsPage';
+import { PulseAIPage } from './pages/PulseAIPage';
+import { PulseAIChatDrawer } from './components/PulseAIChatDrawer';
+import { LoginPage } from './pages/LoginPage';
 
-import { 
-  Sun, 
-  Moon, 
-  ArrowUpRight, 
-  DownloadCloud,
-  Download
-} from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 
 const MainDashboardContent: React.FC = () => {
   const { 
     activeTab, 
     theme, 
-    toggleTheme, 
-    sendTestEvent, 
-    startExtraction,
-    extractedJsonData,
-    downloadCurrentExtractionJson,
-    lastExtractionResult
+    stylePreset,
+    sendTestEvent
   } = useDashboard();
   const [injectingEvent, setInjectingEvent] = useState(false);
 
@@ -38,140 +41,116 @@ const MainDashboardContent: React.FC = () => {
   };
 
   const isDark = theme === 'dark';
+  const isFluenta = stylePreset === 'fluenta';
 
   return (
     <div className={`min-h-screen relative overflow-hidden transition-colors duration-500 font-sans ${
       isDark 
         ? 'dark bg-black text-white' 
-        : 'bg-[#F3F5F8] text-neutral-900'
+        : 'bg-[#F0F3F8] text-neutral-900'
     }`}>
       
       {/* Dynamic Animated Live Background with interactive particles & floating caustics */}
       <LiveBackground />
 
-      {/* Floating Outer Utilities (Top Right like Mindora login & export actions) */}
-      <div className="relative z-30 max-w-[1600px] mx-auto px-4 sm:px-8 pt-4 pb-2 flex items-center justify-end gap-3">
+      {/* Main Container */}
+      <div className="relative z-20 max-w-[1680px] mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
         
-        {/* Export / Quick Trigger Pill */}
-        {extractedJsonData ? (
-          <button
-            onClick={downloadCurrentExtractionJson}
-            className={`hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full border text-xs font-semibold shadow-sm hover:shadow-md transition-all backdrop-blur-md cursor-pointer ${
-              isDark
-                ? 'bg-emerald-950/60 border-emerald-800/80 text-emerald-300 hover:bg-emerald-900/60'
-                : 'bg-emerald-50 border-emerald-200 text-emerald-800 hover:bg-emerald-100'
-            }`}
-            title="Download latest extracted JSON file"
-          >
-            <Download className="w-3.5 h-3.5" />
-            <span>Download JSON ({lastExtractionResult?.recordsExtracted || 0} records)</span>
-          </button>
-        ) : (
-          <button
-            onClick={() => startExtraction()}
-            className={`hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full border text-xs font-semibold shadow-sm hover:shadow-md transition-all backdrop-blur-md cursor-pointer ${
-              isDark
-                ? 'bg-[#121212] border-neutral-800 text-neutral-200 hover:bg-[#1a1a1a]'
-                : 'bg-white/90 border-neutral-200/80 text-neutral-800 hover:bg-white'
-            }`}
-          >
-            <DownloadCloud className={`w-3.5 h-3.5 ${isDark ? 'text-neutral-400' : 'text-neutral-600'}`} />
-            <span>Quick Extract</span>
-          </button>
-        )}
-
-        {/* Theme Switcher Pill (Light / All-Black Dark) */}
-        <button
-          onClick={toggleTheme}
-          aria-label="Toggle All-Black Theme"
-          className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-full border text-xs font-semibold shadow-sm hover:shadow-md transition-all backdrop-blur-md cursor-pointer ${
-            isDark
-              ? 'bg-[#121212] border-neutral-800 text-neutral-200 hover:bg-[#1a1a1a]'
-              : 'bg-white/90 border-neutral-200/80 text-neutral-800 hover:bg-white'
-          }`}
-        >
-          {isDark ? (
-            <>
-              <Sun className="w-3.5 h-3.5 text-amber-400" />
-              <span className="hidden sm:inline font-bold">Light Mode</span>
-            </>
-          ) : (
-            <>
-              <Moon className="w-3.5 h-3.5 text-neutral-700" />
-              <span className="hidden sm:inline font-bold">All-Black Mode</span>
-            </>
-          )}
-        </button>
-
-        {/* User Pill Button with Avatar (Mindora style '+ Admin [Avatar]') */}
-        <div className={`inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border shadow-sm backdrop-blur-md ${
-          isDark
-            ? 'bg-[#121212] border-neutral-800 text-neutral-200'
-            : 'bg-white/90 border-neutral-200/80 text-neutral-700'
-        }`}>
-          <span className="text-xs font-bold">+ Admin</span>
-          <div className={`w-7 h-7 rounded-full font-bold text-[11px] flex items-center justify-center shadow-xs ${
-            isDark
-              ? 'bg-white text-black'
-              : 'bg-neutral-900 text-white'
-          }`}>
-            RP
-          </div>
-        </div>
-
-      </div>
-
-      {/* Main Floating Rounded Card Container */}
-      <div className="relative z-20 max-w-[1600px] mx-auto px-3 sm:px-6 lg:px-8 pb-16 pt-2">
-        <div className={`rounded-[32px] sm:rounded-[44px] backdrop-blur-2xl transition-all duration-300 p-6 sm:p-10 ${
-          isDark
-            ? 'bg-[#0A0A0A] border border-neutral-800/90 shadow-[0_30px_90px_rgba(0,0,0,1)] text-white'
-            : 'bg-white/95 border border-neutral-200/80 shadow-[0_20px_70px_-15px_rgba(15,23,42,0.06)] text-neutral-900'
-        }`}>
+        {/* Fluenta Dock + Main Card Flex Container */}
+        <div className="flex items-start gap-5">
           
-          {/* Top Header inside the Card */}
-          <Header />
+          {/* Fluenta Left Dock (Visible in Fluenta mode) */}
+          {isFluenta && <FluentaDock />}
 
-          {/* Dynamic Content Views */}
-          <main className="mt-4">
-            {activeTab === 'live-stream' ? (
-              <LiveStreamPage />
-            ) : (
-              <DataExtractionPage />
-            )}
-          </main>
+          {/* Main Floating Bento Card */}
+          <div className="flex-1 min-w-0">
+            <div className={`rounded-[32px] sm:rounded-[40px] backdrop-blur-2xl transition-all duration-300 p-5 sm:p-8 lg:p-10 ${
+              isDark
+                ? 'bg-[#0A0A0A]/95 border border-white/10 shadow-[0_30px_90px_rgba(0,0,0,1)] text-white'
+                : 'bg-white/95 border border-neutral-200/80 shadow-[0_20px_70px_-15px_rgba(15,23,42,0.06)] text-neutral-900'
+            }`}>
+              
+              {/* Top Header inside the Card */}
+              <Header />
 
-          {/* Integrated Bottom Ticker */}
-          <div className={`mt-12 pt-6 border-t ${
-            isDark ? 'border-neutral-850 border-neutral-800/80' : 'border-neutral-100'
-          }`}>
-            <FooterTicker />
+              {/* Dynamic Content Views */}
+              <main className="mt-4">
+                {activeTab === 'overview' ? (
+                  <OverviewPage />
+                ) : activeTab === 'live-stream' ? (
+                  <LiveStreamPage />
+                ) : activeTab === 'predictive' ? (
+                  <PredictiveAnalyticsPage />
+                ) : activeTab === 'simulator' ? (
+                  <WhatIfSimulatorPage />
+                ) : activeTab === 'profitability' ? (
+                  <ProfitabilityPage />
+                ) : activeTab === 'benchmarking' ? (
+                  <BenchmarkingPage />
+                ) : activeTab === 'segmentation' ? (
+                  <SegmentationPage />
+                ) : activeTab === 'reports' ? (
+                  <BusinessReportsPage />
+                ) : activeTab === 'pipeline' ? (
+                  <PipelineMonitoringPage />
+                ) : activeTab === 'pulse-ai' ? (
+                  <PulseAIPage />
+                ) : (
+                  <DataExtractionPage />
+                )}
+              </main>
+
+              {/* Integrated Bottom Ticker */}
+              <div className={`mt-10 pt-6 border-t ${
+                isDark ? 'border-white/10' : 'border-neutral-100'
+              }`}>
+                <FooterTicker />
+              </div>
+
+            </div>
           </div>
 
         </div>
+
       </div>
 
-      {/* Floating Circular Quick-Action Arrow (Bottom-Right, matching Mindora reference) */}
+      {/* Bottom Floating Theme Switcher matching both images [✦ Fluenta | 🟠 Ember] */}
+      <ThemePresetSwitcher />
+
+      {/* Floating Circular Quick-Action Arrow (Bottom-Right, placed above PulseAI trigger) */}
       <button
         onClick={handleQuickAction}
         title="Simulate Real-Time Telemetry Event"
-        className={`fixed bottom-6 right-6 z-40 w-12 h-12 rounded-full border shadow-lg hover:shadow-xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 group cursor-pointer ${
+        className={`fixed bottom-24 right-6 z-40 w-11 h-11 rounded-full border shadow-lg hover:shadow-xl flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95 group cursor-pointer ${
           isDark
-            ? 'bg-[#121212] border-neutral-800 text-white'
+            ? 'bg-[#121212] border-white/10 text-white'
             : 'bg-white border-neutral-200/80 text-neutral-900'
         }`}
       >
-        <ArrowUpRight className={`w-5 h-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 ${injectingEvent ? 'animate-spin' : ''}`} />
+        <ArrowUpRight className={`w-4 h-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 ${injectingEvent ? 'animate-spin' : ''}`} />
       </button>
+
+      {/* PulseAI Floating Chat Assistant Drawer */}
+      <PulseAIChatDrawer />
 
     </div>
   );
 };
 
+const AppContent: React.FC = () => {
+  const { isAuthenticated } = useDashboard();
+
+  if (!isAuthenticated) {
+    return <LoginPage />;
+  }
+
+  return <MainDashboardContent />;
+};
+
 export function App() {
   return (
     <DashboardProvider>
-      <MainDashboardContent />
+      <AppContent />
     </DashboardProvider>
   );
 }

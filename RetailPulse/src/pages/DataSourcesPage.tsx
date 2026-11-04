@@ -10,7 +10,8 @@ import {
   Layers,
   FileSpreadsheet,
   Globe,
-  Send
+  Send,
+  ExternalLink
 } from 'lucide-react';
 import type { SourceSelection } from '../types';
 
@@ -105,19 +106,32 @@ export const DataSourcesPage: React.FC = () => {
               </span>
             </div>
 
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleSelectSource('ShopPulse');
-              }}
-              className={`w-full py-2.5 rounded-full font-bold text-xs transition-all cursor-pointer ${
-                selectedSource === 'ShopPulse'
-                  ? 'bg-white text-neutral-950 dark:bg-white dark:text-black'
-                  : 'pill-btn-dark'
-              }`}
-            >
-              {selectedSource === 'ShopPulse' ? 'Selected ✓' : 'Select Source'}
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSelectSource('ShopPulse');
+                }}
+                className={`flex-1 py-2.5 rounded-full font-bold text-xs transition-all cursor-pointer ${
+                  selectedSource === 'ShopPulse'
+                    ? 'bg-white text-neutral-950 dark:bg-white dark:text-black'
+                    : 'pill-btn-dark'
+                }`}
+              >
+                {selectedSource === 'ShopPulse' ? 'Selected ✓' : 'Select Source'}
+              </button>
+              <a
+                href="http://localhost:3000"
+                target="_blank"
+                rel="noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="py-2.5 px-3.5 rounded-full font-bold text-xs bg-purple-600 hover:bg-purple-500 text-white flex items-center justify-center gap-1.5 transition-all shadow-xs cursor-pointer hover:scale-105"
+                title="Launch ShopPulse in new tab"
+              >
+                <span>Launch</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
           </div>
         </div>
 
@@ -172,19 +186,32 @@ export const DataSourcesPage: React.FC = () => {
               </span>
             </div>
 
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleSelectSource('TechMart');
-              }}
-              className={`w-full py-2.5 rounded-full font-bold text-xs transition-all cursor-pointer ${
-                selectedSource === 'TechMart'
-                  ? 'bg-white text-neutral-950 dark:bg-white dark:text-black'
-                  : 'pill-btn-dark'
-              }`}
-            >
-              {selectedSource === 'TechMart' ? 'Selected ✓' : 'Select Source'}
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSelectSource('TechMart');
+                }}
+                className={`flex-1 py-2.5 rounded-full font-bold text-xs transition-all cursor-pointer ${
+                  selectedSource === 'TechMart'
+                    ? 'bg-white text-neutral-950 dark:bg-white dark:text-black'
+                    : 'pill-btn-dark'
+                }`}
+              >
+                {selectedSource === 'TechMart' ? 'Selected ✓' : 'Select Source'}
+              </button>
+              <a
+                href="http://localhost:5174"
+                target="_blank"
+                rel="noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="py-2.5 px-3.5 rounded-full font-bold text-xs bg-sky-600 hover:bg-sky-500 text-white flex items-center justify-center gap-1.5 transition-all shadow-xs cursor-pointer hover:scale-105"
+                title="Launch TechMart in new tab"
+              >
+                <span>Launch</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
           </div>
         </div>
 

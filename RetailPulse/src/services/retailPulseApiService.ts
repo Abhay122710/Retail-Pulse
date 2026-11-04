@@ -179,5 +179,294 @@ export const retailPulseApiService = {
       console.warn('[Dashboard API] Error sending test event:', err);
       return null;
     }
+  },
+
+  // --- Predictive Analytics APIs (Part 3) ---
+
+  async getForecasts(params: {
+    source?: string;
+    productId?: string | null;
+    horizonDays?: number;
+    targetMetric?: 'UNITS' | 'REVENUE';
+  }): Promise<{ data: any; engine?: string } | null> {
+    try {
+      const search = new URLSearchParams();
+      if (params.source) search.set('source', params.source);
+      if (params.productId) search.set('productId', params.productId);
+      if (params.horizonDays) search.set('horizonDays', String(params.horizonDays));
+      if (params.targetMetric) search.set('targetMetric', params.targetMetric);
+
+      const res = await fetch(`${API_BASE_URL}/predictive/forecasts?${search.toString()}`);
+      if (!res.ok) return null;
+      return await res.json();
+    } catch (err) {
+      console.warn('[Dashboard API] Error fetching forecasts:', err);
+      return null;
+    }
+  },
+
+  async triggerGenerateForecast(params: {
+    source?: string;
+    productId?: string | null;
+    horizonDays?: number;
+    targetMetric?: 'UNITS' | 'REVENUE';
+  }): Promise<any | null> {
+    try {
+      const res = await fetch(`${API_BASE_URL}/predictive/forecasts/generate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(params)
+      });
+      if (!res.ok) return null;
+      return await res.json();
+    } catch (err) {
+      console.warn('[Dashboard API] Error generating forecast:', err);
+      return null;
+    }
+  },
+
+  async getInventory(source?: string): Promise<{ data: any; engine?: string } | null> {
+    try {
+      const query = source ? `?source=${encodeURIComponent(source)}` : '';
+      const res = await fetch(`${API_BASE_URL}/predictive/inventory${query}`);
+      if (!res.ok) return null;
+      return await res.json();
+    } catch (err) {
+      console.warn('[Dashboard API] Error fetching inventory:', err);
+      return null;
+    }
+  },
+
+  async getAnomalies(filter?: {
+    source?: string;
+    metric?: string;
+    severity?: string;
+  }): Promise<{ data: any; engine?: string } | null> {
+    try {
+      const search = new URLSearchParams();
+      if (filter?.source) search.set('source', filter.source);
+      if (filter?.metric) search.set('metric', filter.metric);
+      if (filter?.severity) search.set('severity', filter.severity);
+
+      const res = await fetch(`${API_BASE_URL}/predictive/anomalies?${search.toString()}`);
+      if (!res.ok) return null;
+      return await res.json();
+    } catch (err) {
+      console.warn('[Dashboard API] Error fetching anomalies:', err);
+      return null;
+    }
+  },
+
+  async acknowledgeAnomaly(anomalyId: string): Promise<boolean> {
+    try {
+      const res = await fetch(`${API_BASE_URL}/predictive/anomalies/${encodeURIComponent(anomalyId)}/ack`, {
+        method: 'POST'
+      });
+      return res.ok;
+    } catch (err) {
+      console.warn('[Dashboard API] Error acknowledging anomaly:', err);
+      return false;
+    }
+  },
+
+  async getModelEvaluation(source?: string, productId?: string | null): Promise<any | null> {
+    try {
+      const search = new URLSearchParams();
+      if (source) search.set('source', source);
+      if (productId) search.set('productId', productId);
+
+      const res = await fetch(`${API_BASE_URL}/predictive/evaluation?${search.toString()}`);
+      if (!res.ok) return null;
+      const json = await res.json();
+      return json.data || null;
+    } catch (err) {
+      console.warn('[Dashboard API] Error fetching model evaluation:', err);
+      return null;
+    }
+  },
+
+  async getTimeSeries(source?: string, productId?: string | null): Promise<any | null> {
+    try {
+      const search = new URLSearchParams();
+      if (source) search.set('source', source);
+      if (productId) search.set('productId', productId);
+
+      const res = await fetch(`${API_BASE_URL}/predictive/timeseries?${search.toString()}`);
+      if (!res.ok) return null;
+      const json = await res.json();
+      return json.data || null;
+    } catch (err) {
+      console.warn('[Dashboard API] Error fetching time series:', err);
+      return null;
+    }
+  },
+
+  async getPipelineMonitoring(source?: string): Promise<any | null> {
+    try {
+      const search = new URLSearchParams();
+      if (source && source !== 'ALL SOURCES' && source !== 'All') {
+        search.set('source', source);
+      }
+      const res = await fetch(`${API_BASE_URL}/pipeline/monitoring?${search.toString()}`);
+      if (!res.ok) return null;
+      return await res.json();
+    } catch (err) {
+      console.warn('[Dashboard API] Error fetching pipeline monitoring:', err);
+      return null;
+    }
+  },
+
+  async getBenchmark(): Promise<any | null> {
+    try {
+      const res = await fetch(`${API_BASE_URL}/analytics/benchmark`);
+      if (!res.ok) return null;
+      return await res.json();
+    } catch (err) {
+      console.warn('[Dashboard API] Error fetching benchmark analytics:', err);
+      return null;
+    }
+  },
+
+  async getProfitability(source?: string, category?: string): Promise<any | null> {
+    try {
+      const search = new URLSearchParams();
+      if (source && source !== 'ALL SOURCES' && source !== 'All') search.set('source', source);
+      if (category && category !== 'ALL') search.set('category', category);
+
+      const res = await fetch(`${API_BASE_URL}/analytics/profitability?${search.toString()}`);
+      if (!res.ok) return null;
+      return await res.json();
+    } catch (err) {
+      console.warn('[Dashboard API] Error fetching profitability analytics:', err);
+      return null;
+    }
+  },
+
+  async simulateScenario(params: {
+    source?: string;
+    productId?: string | null;
+    price_change_pct?: number;
+    demand_change_pct?: number;
+    price_elasticity?: number;
+    inventory_delta_pct?: number;
+    lead_time_days_delta?: number;
+    min_order_quantity_override?: number | null;
+    horizon_days?: number;
+  }): Promise<{ success: boolean; data?: any; error?: string; message?: string } | null> {
+    try {
+      const res = await fetch(`${API_BASE_URL}/predictive/simulate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(params)
+      });
+      const json = await res.json();
+      return json;
+    } catch (err: any) {
+      console.warn('[Dashboard API] Error running simulation:', err);
+      return { success: false, message: err.message || 'Network error contacting simulator' };
+    }
+  },
+
+  async getSavedScenarios(): Promise<any[] | null> {
+    try {
+      const res = await fetch(`${API_BASE_URL}/predictive/scenarios`);
+      if (!res.ok) return null;
+      const json = await res.json();
+      return json.scenarios || [];
+    } catch (err) {
+      console.warn('[Dashboard API] Error fetching saved scenarios:', err);
+      return null;
+    }
+  },
+
+  async saveScenario(scenario: any): Promise<boolean> {
+    try {
+      const res = await fetch(`${API_BASE_URL}/predictive/scenarios`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(scenario)
+      });
+      return res.ok;
+    } catch (err) {
+      console.warn('[Dashboard API] Error saving scenario:', err);
+      return false;
+    }
+  },
+
+  async deleteScenario(id: string): Promise<boolean> {
+    try {
+      const res = await fetch(`${API_BASE_URL}/predictive/scenarios/${encodeURIComponent(id)}`, {
+        method: 'DELETE'
+      });
+      return res.ok;
+    } catch (err) {
+      console.warn('[Dashboard API] Error deleting scenario:', err);
+      return false;
+    }
+  },
+
+  async getSegmentation(source?: string, dateFrom?: string, dateTo?: string): Promise<any | null> {
+    try {
+      const search = new URLSearchParams();
+      if (source && source !== 'ALL SOURCES' && source !== 'All') search.set('source', source);
+      if (dateFrom) search.set('date_from', dateFrom);
+      if (dateTo) search.set('date_to', dateTo);
+
+      const res = await fetch(`${API_BASE_URL}/analytics/segmentation?${search.toString()}`);
+      if (!res.ok) return null;
+      return await res.json();
+    } catch (err) {
+      console.warn('[Dashboard API] Error fetching segmentation analytics:', err);
+      return null;
+    }
+  },
+
+  async getExecutiveReport(source?: string, days?: number): Promise<any | null> {
+    try {
+      const search = new URLSearchParams();
+      if (source && source !== 'ALL SOURCES' && source !== 'All') search.set('source', source);
+      if (days) search.set('days', String(days));
+
+      const res = await fetch(`${API_BASE_URL}/reports/executive?${search.toString()}`);
+      if (!res.ok) return null;
+      return await res.json();
+    } catch (err) {
+      console.warn('[Dashboard API] Error fetching executive report:', err);
+      return null;
+    }
+  },
+
+  getReportCsvUrl(section: string, source?: string): string {
+    const search = new URLSearchParams();
+    search.set('section', section);
+    if (source && source !== 'ALL SOURCES' && source !== 'All') search.set('source', source);
+    return `${API_BASE_URL}/reports/export-csv?${search.toString()}`;
+  },
+
+  async askPulseAI(
+    query: string,
+    source?: string,
+    conversationHistory?: any[]
+  ): Promise<{ success: boolean; data?: any; error?: string; message?: string } | null> {
+    try {
+      const res = await fetch(`${API_BASE_URL}/ai/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          query,
+          source: source && source !== 'All' ? source : 'ALL SOURCES',
+          conversation_history: conversationHistory || []
+        })
+      });
+      return await res.json();
+    } catch (err: any) {
+      console.warn('[Dashboard API] Error communicating with PulseAI:', err);
+      return {
+        success: false,
+        error: 'NETWORK_ERROR',
+        message: err.message || 'Network error reaching PulseAI gateway'
+      };
+    }
   }
 };
+
